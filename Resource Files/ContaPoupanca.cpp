@@ -1,11 +1,8 @@
 #include "..\Header Files\ContaPoupanca.h"
 
 ContaPoupanca::ContaPoupanca(const Usuario & user, const int & jurosExtra,const float & saldo){
-  // setUser(user);
-  // setSenha(senha);
-  // setLogin(login);
-  // setNumeroDoCartao(numeroDoCartao);
-  // setSaldo(saldo);
+  setUser(user);
+  setSaldo(saldo);
 }
 //SALVAR DADOS
 /*
