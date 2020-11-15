@@ -1,37 +1,19 @@
-#include "ContaCorrente.h"
+#include "..\Header Files\ContaCorrente.h"
 
 
-ContaCorrente::ContaCorrente(const Usuario &user,const int &senha,const long int & login,const float & saldo, const long int & numeroDoCartao){
+ContaCorrente::ContaCorrente(const Usuario & user,const int & taxaDeManutencao,const float & saldo){
   setUser(user);
-  setSenha(senha);
-  setLogin(login);
-  setNumeroDoCartao(numeroDoCartao);
   setSaldo(saldo);
 }
 
 
-void ContaCorrente::setTaxaDeManutençao (const int & taxaDeManutençao)
-{
-    this-> taxaDeManutençao = taxaDeManutençao;
+void ContaCorrente::setTaxaDeManutencao (const int & taxaDeManutencao){
+    this-> taxaDeManutencao = taxaDeManutencao;
 }
-
-
-void ContaCorrente::taxaDeManutençao(float taxaDeManutençao)
-{
-    taxaDeManutençao=15;
+void ContaCorrente::CalcularTaxaDeManutencao(const float & taxaDeManutencao){
+    this->taxaDeManutencao=15;
     /* Como o programa irá funcionar em um tempo menor do que um mês, foi determinado uma única cobrança para
-    a taxa de manutenção visto que o programa só irá ficar aberto poucos minutos, e por mais que tivessemos 
+    a taxa de manutenção visto que o programa só irá ficar aberto poucos minutos, e por mais que tivessemos
     criado um relógio, ele seria reiniciado toda vez que abrisse o programa, por tanto não faz sentido cria-lo*/
-	saldo = saldo -taxaDeManutençao;
-    
+	setSaldo(getSaldo() -taxaDeManutencao);
 }
-/*
-bool ContaCorrente::salvarDados()
-{
-	
-}
-bool ContaCorrente::cadastroUsuario()
-{
-	
-}*/
-

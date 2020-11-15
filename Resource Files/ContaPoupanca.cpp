@@ -1,12 +1,11 @@
-#include "ContaPoupanca.h"
+#include "..\Header Files\ContaPoupanca.h"
 
-
-ContaPoupanca::ContaPoupanca(const Usuario &user,const int &senha,const long int & login,const float & saldo, const long int & numeroDoCartao){
-  setUser(user);
-  setSenha(senha);
-  setLogin(login);
-  setNumeroDoCartao(numeroDoCartao);
-  setSaldo(saldo);
+ContaPoupanca::ContaPoupanca(const Usuario & user, const int & jurosExtra,const float & saldo){
+  // setUser(user);
+  // setSenha(senha);
+  // setLogin(login);
+  // setNumeroDoCartao(numeroDoCartao);
+  // setSaldo(saldo);
 }
 //SALVAR DADOS
 /*
@@ -22,9 +21,9 @@ void ContaPoupanca::setJurosExtra (const int & jurosExtra)
 }
 
 //JUROS QUE A CONTA RENDE
-//O JUROS É DETERMINADO EM % 
+//O JUROS É DETERMINADO EM %
 //ESSE JUROS É ANUAL, POIS NAO TEMOS UM RELÓGIO PARA DESCONTÁ-LO MENSALMENTE
-void ContaPoupanca::JurosExtra(float jurosExtra)
+void ContaPoupanca::CalcularJurosExtra(const float & jurosExtra)
 {
-    saldo+=(saldo*(jurosExtra/100));
+    setSaldo(getSaldo()*(jurosExtra/100));
 }

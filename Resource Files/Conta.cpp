@@ -1,5 +1,5 @@
 #include "..\Header Files\Conta.h"
-Conta::Conta(const Usuario &user,const int &senha,const float & saldo){
+Conta::Conta(const Usuario &user,const int & senha,const float & saldo){
   setUser(user);
   setSenha(senha);
   setSaldo(saldo);
