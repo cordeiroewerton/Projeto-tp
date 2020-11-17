@@ -1,16 +1,15 @@
 #include "..\Header Files\ContaCorrente.h"
 
 
-ContaCorrente::ContaCorrente(const Usuario & user,const int & taxaDeManutencao,const float & saldo){
-  setUser(user);
-  setSaldo(saldo);
+ContaCorrente::ContaCorrente(const Usuario & user,const int & taxaDeManutencao,const float & saldo):conta(user,saldo){
+  this-> taxaDeManutencao=taxaDeManutencao;
 }
 
 
 void ContaCorrente::setTaxaDeManutencao (const int & taxaDeManutencao){
     this-> taxaDeManutencao = taxaDeManutencao;
 }
-void ContaCorrente::CalcularTaxaDeManutencao(const float & taxaDeManutencao){
+void ContaCorrente::CalcularTaxaDeManutencao(){
     this->taxaDeManutencao=taxaDeManutencao;
     /* Como o programa irá funcionar em um tempo menor do que um mês, foi determinado uma única cobrança para
     a taxa de manutenção visto que o programa só irá ficar aberto poucos minutos, e por mais que tivessemos

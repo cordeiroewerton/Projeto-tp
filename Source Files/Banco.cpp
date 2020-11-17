@@ -138,7 +138,7 @@ int subMenu(){
   cout<<"[4]Deletar Conta"<<endl;
   cout<<"[5]Consultar Dados"<<endl;
   cout<<"[6]Modificar Dados"<<endl;
-  cout<<"[5]sair"<<endl;
+  cout<<"[7]sair"<<endl;
   cout<<setw(40)<<" "<<endl;
   cin>>op;
   return op;
