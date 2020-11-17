@@ -1,10 +1,10 @@
 #include "..\Header Files\Usuario.h"
 #include "..\Header Files\Conta.h"
 ostream & operator<<(ostream & os,Usuario & auxUsuario){
-	cout<<"Nome: "<<auxUsuario.getNomeDoUsuario();
-	cout<<"Idade: "<<auxUsuario.getIdade();
-	cout<<"CPF: "<<auxUsuario.getCPF();
-	cout<<"Endereco: "<<auxUsuario.getEnderecoDoUsuario();
+	cout<<"Nome: "<<auxUsuario.getNomeDoUsuario()<<endl;
+	cout<<"Idade: "<<auxUsuario.getIdade()<<endl;
+	cout<<"CPF: "<<auxUsuario.getCPF()<<endl;
+	cout<<"Endereco: "<<auxUsuario.getEnderecoDoUsuario()<<endl;
 	return os;
 }
 istream & operator>>(istream & is,Usuario & auxUsuario){
@@ -37,7 +37,7 @@ ostream & operator<<(ostream & os,Conta & auxUsuario){
 istream & operator>>(istream & in, Conta & contaAux){
     int senha;
     cout<<"senha: ";cin>>senha;
-    contaAux.setSenha(senha);
-    contaAux.setSaldo(0);
+   contaAux.setSenha(senha);
+   contaAux.setSaldo(0);
     return in;
 }
