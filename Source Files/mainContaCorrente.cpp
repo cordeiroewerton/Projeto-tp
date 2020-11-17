@@ -1,7 +1,10 @@
 #include <iostream>
 using namespace std;
+//Atenção estamos usando recursos do C++11 !
+#include "..\Resource Files\Usuario.cpp"
+#include "..\Resource Files\Conta.cpp"
+#include "..\Resource Files\Overload.cpp"
 #include "..\Resource Files\ContaCorrente.cpp"
-
 int main(){
 
     ContaCorrente contC;

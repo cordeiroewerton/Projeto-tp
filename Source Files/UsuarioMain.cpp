@@ -1,5 +1,6 @@
 //main teste para a classe usuario
 #include <iostream>
+//Atenção estamos usando recursos do C++11 !
 using namespace std;
 #include "..\Resource Files\Usuario.cpp"
 #include "..\Resource Files\Conta.cpp"

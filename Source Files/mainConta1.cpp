@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+//Atenção estamos usando recursos do C++11 !
 using namespace std;
 #include "..\Resource Files\Conta.cpp"
 #include "..\Header Files\ContaPoupanca.h"

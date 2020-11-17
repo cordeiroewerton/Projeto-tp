@@ -37,7 +37,7 @@ ostream & operator<<(ostream & os,Conta & auxUsuario){
 istream & operator>>(istream & in, Conta & contaAux){
     int senha;
     cout<<"senha: ";cin>>senha;
-   contaAux.setSenha(senha);
-   contaAux.setSaldo(0);
+    contaAux.setSenha(senha);
+    contaAux.setSaldo(0);
     return in;
 }

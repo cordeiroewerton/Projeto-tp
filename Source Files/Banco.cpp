@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
+//Atenção estamos usando recursos do C++11 !
 using namespace std;
 #include "..\Resource Files\Usuario.cpp"
 #include "..\Resource Files\Conta.cpp"
