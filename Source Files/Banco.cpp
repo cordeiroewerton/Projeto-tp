@@ -3,7 +3,12 @@
 #include <fstream>
 #include <iomanip>
 #include <vector>
-//Atenção estamos usando recursos do C++11 !
+
+/*Considerações iniciais:
+	Os dados são salvos após usuário deslogar do sistema. É a equipe optou por usar os métodos write e read da biblioteca fstream, pois facilitam
+na hora de gravar/ler o conjunto de dados.
+	Atenção estamos usando recursos do C++11 !	
+*/
 using namespace std;
 #include "..\Resource Files\Usuario.cpp"
 #include "..\Resource Files\Conta.cpp"
@@ -11,6 +16,7 @@ using namespace std;
 #include "..\Resource Files\ContaCorrente.cpp"
 #include "..\Resource Files\Overload.cpp"
 #include "..\Resource Files\Banco.cpp"
+
 int menu();
 int subMenu();
 
@@ -18,17 +24,17 @@ template<typename T>
 void gerenciadorDeCadastros(T &);
 
 int main(){
-    Banco < Conta > p;
+    Banco <Conta> p;
     long int CPF;
     float valorSaque, valorDeposito;
     int senha, loopSistema;
-
-    // // Usuario usuarioAuxTeste1(/*Nome*/"Valmir F",/*Idade*/21,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
-    // // Usuario usuarioAuxTeste2(/*Nome*/"Erwerton",/*Idade*/18,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
-    // // Conta contaAuxTeste1(usuarioAuxTeste1,/*senha*/1,/*login possível saida*/4,/*Saldo*/10000,/*Numero de cartao*/11313);
-    // // Conta contaAuxTeste2(usuarioAuxTeste2,/*senha*/2,/*login possível saida*/5,/*Saldo*/10000,/*Numero de cartao*/11313);
-    // // p.signUp(contaAuxTeste1);
-    // // p.signUp(contaAuxTeste2);
+	
+    // Usuario usuarioAuxTeste1(/*Nome*/"Valmir F",/*Idade*/21,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
+    // Usuario usuarioAuxTeste2(/*Nome*/"Erwerton",/*Idade*/18,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
+    // Conta contaAuxTeste1(usuarioAuxTeste1,/*senha*/1,/*login possível saida*/4,/*Saldo*/10000,/*Numero de cartao*/11313);
+    // Conta contaAuxTeste2(usuarioAuxTeste2,/*senha*/2,/*login possível saida*/5,/*Saldo*/10000,/*Numero de cartao*/11313);
+    // p.signUp(contaAuxTeste1);
+    // p.signUp(contaAuxTeste2);
 
     while(true){
       int op = menu();
