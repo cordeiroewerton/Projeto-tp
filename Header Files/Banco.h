@@ -4,18 +4,21 @@
 
 #ifndef _BANCO_H
 #define _BANCO_H
-template <class T>
+
 class Banco:public ContaPoupanca, public ContaCorrente{
     private:
-      vector<T>listaDeContas;
-      T auxConta;
+      vector<ContaCorrente>listaDeContasC;
+      vector<ContaPoupanca>listaDeContasP;
+      ContaCorrente auxContaC;
+      ContaPoupanca auxContaP;
       bool verificarLogin(long int, int);
       int encontarConta(long int);//Ok
       bool  carregarDados();
     public:
       Banco();
       bool login(long int,int);//OK
-      bool signUp(T);//OK
+      bool signUp(ContaPoupanca);//OK
+      bool signUp(ContaCorrente);
       bool signOut();//Ok
       bool deletarContas(long int, int);
       bool modificarDados(long int ,int );
