@@ -1,7 +1,6 @@
-#include <iostream>
-#include <fstream>
+#include < iostream >
+#include < fstream >
 using namespace std;
-//Atenção estamos usando recursos do C++11 !
 #include " ..\Resource Files\Conta.cpp "
 #include " ..\Resource Files\Overload.cpp "
 #include " ..\Resource Files\Usuario.cpp "

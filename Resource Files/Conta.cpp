@@ -22,19 +22,5 @@ Usuario Conta::getUser()const{
 int Conta::getSenha()const{
   return senha;
 }
-bool Conta::sacar(const float & valorDoSaque){
-  if(valorDoSaque > saldo){
-    return false;
-  }
-  saldo -= valorDoSaque;
-  return true;
-}
-bool Conta::depositar(const float & valorDoDeposito){
-  if(valorDoDeposito < 0){
-    return false;
-  }
-  saldo += valorDoDeposito;
-  return true;
-}
 Conta::~Conta(){
 }

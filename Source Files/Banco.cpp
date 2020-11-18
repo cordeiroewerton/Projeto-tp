@@ -1,104 +1,100 @@
 #include <iostream>
-#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <vector>
-
-/*Considerações iniciais:
-	Os dados são salvos após usuário deslogar do sistema. É a equipe optou por usar os métodos write e read da biblioteca fstream, pois facilitam
-na hora de gravar/ler o conjunto de dados.
-	Atenção estamos usando recursos do C++11 !	
-*/
 using namespace std;
 #include "..\Resource Files\Usuario.cpp"
 #include "..\Resource Files\Conta.cpp"
-#include "..\Resource Files\ContaPoupanca.cpp"
-#include "..\Resource Files\ContaCorrente.cpp"
 #include "..\Resource Files\Overload.cpp"
 #include "..\Resource Files\Banco.cpp"
-
+#include "..\Resource Files\ContaPoupanca.cpp"
+#include "..\Resource Files\ContaCorrente.cpp"
 int menu();
 int subMenu();
-
-template<typename T>
-void gerenciadorDeCadastros(T &);
-
 int main(){
-    Banco <Conta> p;
-    long int CPF;
+    Banco p;
+    ContaPoupanca contaAuxP;
+    ContaCorrente contaAuxC;
+    long int CPF1,CPF2;
     float valorSaque, valorDeposito;
     int senha, loopSistema;
-	
-    // Usuario usuarioAuxTeste1(/*Nome*/"Valmir F",/*Idade*/21,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
-    // Usuario usuarioAuxTeste2(/*Nome*/"Erwerton",/*Idade*/18,/*CPF*/2,/*Endereço*/{/*RUA*/"qualquerRua",/*CEP*/"1415454CEP",/*cidade*/"qualquerCidade",/*estado*/"qualquerEstado"});
-    // Conta contaAuxTeste1(usuarioAuxTeste1,/*senha*/1,/*login possível saida*/4,/*Saldo*/10000,/*Numero de cartao*/11313);
-    // Conta contaAuxTeste2(usuarioAuxTeste2,/*senha*/2,/*login possível saida*/5,/*Saldo*/10000,/*Numero de cartao*/11313);
-    // p.signUp(contaAuxTeste1);
-    // p.signUp(contaAuxTeste2);
-
+    int op1,op2;
     while(true){
-      int op = menu();
+      int op(menu());
       switch (op) {
         case 1:
-          cout<<"[1] Conta Poupaca"<<endl;
-          cout<<"[2] Conta Corrente"<<endl;
-          cin>>op;
-          switch (op) {
-            case 1:
-              //Lembrar de substuir o p
-              cout<<"Insirar os dados da sua conta Poupanca"<<endl;
-              gerenciadorDeCadastros(p);
-              cout<<"Conta criada!"<<endl;
-              break;
-            case 2:
-              //Lembrar de substuir o p
-              cout<<"Insira os dados da sua conta Corrente"<<endl;
-              gerenciadorDeCadastros(p);
-              cout<<"Conta criada!"<<endl;
-              break;
-          }
-        break;
+            cout<<"[1] Conta Poupanca"<<endl;
+            cout<<"[2] Conta Corrente"<<endl;
+            cin>>op2;
+                if(op2==1){
+                    cout<<"Insirar os dados da sua Conta Poupanca"<<endl;
+                    cin>>contaAuxP;
+                    p.signUp(contaAuxP);
+                }
+                else if(op2==2){
+                    cout<<"Insira os dados da sua Conta Corrente"<<endl;
+                    cin>>contaAuxC;
+                    p.signUp(contaAuxC);
+                }
+                else{
+                    cout<<"Opcao nao encontrada";
+                }
+            
+            break;
         case 2:
-          //O código precisa identificar o tipo de conta pelo CPF;
-          cout<<"Informe seu CPF:";cin>>CPF;
+          cout<<"Informe seu CPF:";cin>>CPF1;
           cout<<"Informe sua senha:";cin>>senha;
-          loopSistema= p.login(CPF,senha);
+          loopSistema= p.login(CPF1,senha);
           cout<<(loopSistema ? " ": "senha invalida")<<endl;
           while(loopSistema){
-              op = subMenu();
-              if(op > 6)
-                break;
-              switch (op) {
+              op1= subMenu();
+              switch (op1) {
                   case 1:
+                      cout<<"Informe seu CPF:";cin>>CPF1;
+                      cout<<"Informe sua senha:";cin>>senha;
                       cout<<"Informe o valor do saque[BRL]:";
                       cin>>valorSaque;
-                      // p.sacar(valorSaque);
-                      //ambiguidade erro
-                      //cout<<"Saque "<<(p.sacar(valorSaque)?"realizado!":"recusado!")<<endl;
+                      cout<<"Saque "<<(p.sacar(valorSaque,CPF1)?"realizado!":"recusado!")<<endl;
                       break;
                   case 2:
-                      cout<<"Informe o valor do deposito[BRL]:";
+                      cout<<"Informe seu CPF:";cin>>CPF1;
+                      cout<<"Informe sua senha:";cin>>senha;
+                      cout<<"Informe o valor do deposito    [BRL]:";
                       cin>>valorDeposito;
-                      //ambiguidade erro
-                      //cout<<"Deposito "<<(p.depositar(valorDeposito)?"realizado!":" recusado!")<<endl;
+                      cout<<"Deposito "<<(p.depositar(valorDeposito,CPF1)?"realizado!":" recusado!")<<endl;
                       break;
                   case 3:
-                      cout<<"Ideia nao definida"<<endl;
+                      cout<<"Informe seu CPF:";cin>>CPF1;
+                      cout<<"Informe sua senha:";cin>>senha;
+                      if(not(p.login(CPF1,senha))) {
+                          cout<<"senha invalida"<<endl;
+                          break;
+                      }
+                      cout<<"Informe o cpf do destinatario: ";
+                      cin>>CPF2;
+                      cout<<"Informe o valor da transferencia: ";
+                      cin>>valorSaque;
+                      cout<<"Transferencia "<<(p.transferencia(CPF1,CPF2,valorSaque)?"nao ":"")<<"realizada"<<endl;
                       break;
                   case 4:
-                      cout<<"Ideia nao definida"<<endl;
-                      if(p.login(CPF,senha)){
+                      if(p.login(CPF1,senha)){
+                          cout<<"efetuando saque...";
+//                          p.deletarContas(CPF1,senha);
                           cout<<"deletando"<<endl;
-                          p.deletarContas(CPF,senha);
-                          cout<<"Login aceito";
                       }
                       break;
                   case 5:
-                      p.consultarDados(CPF,senha);
+                     p.consultarDados(CPF1,senha);
                       break;
                   case 6:
-                      cout<<"Ideia nao definiada"<<endl;
+                      cout<<"Informe seu CPF:";cin>>CPF1;
+                      cout<<"Informe sua senha:";cin>>senha;
+ //                     if(p.login(CPF1,senha))
+ //                         p.modificarDados(CPF1,senha);
                       break;
+                  default :
+                      loopSistema = false;
+                      p.signOut();
               }
           }
           break;
@@ -106,20 +102,9 @@ int main(){
         cout<<"Case 3"<<endl;
           p.signOut();
           return 0;
-          break;
       }
     }
-  return 0;
-}
-template<typename T>
-void gerenciadorDeCadastros(T & bancoGenerico){
-  Usuario userAux;
-  Conta contaAux;
-  cin>>userAux;
-  cin>>contaAux;
-  contaAux.setUser(userAux);
-  bancoGenerico.signUp(contaAux);
-}
+ }
 //implementar as exceções
 int menu(){
   int op;
