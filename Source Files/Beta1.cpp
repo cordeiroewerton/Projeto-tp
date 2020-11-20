@@ -43,21 +43,6 @@ int main(){
                     p.signUp(contaAuxC);
                     break;
             }
-              /*  CASO COM IF, SE QUISEREM UTILIZAR.
-                if(op2==1){
-                    cout<<"Insirar os dados da sua Conta Poupanca"<<endl;
-                    cin>>contaAuxP;
-                    p.signUp(contaAuxP);
-                }
-                else if(op2==2){
-                    cout<<"Insira os dados da sua Conta Corrente"<<endl;
-                    cin>>contaAuxC;
-                    p.signUp(contaAuxC);
-                }
-                else{
-                    cout<<"Opcao nao encontrada";
-                }
-*/
             break;
         case 2:
           cout<<"Informe seu CPF:";cin>>CPF1;
