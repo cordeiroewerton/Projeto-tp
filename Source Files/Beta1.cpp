@@ -9,14 +9,19 @@ using namespace std;
 #include "..\Resource Files\Banco.cpp"
 #include "..\Resource Files\ContaPoupanca.cpp"
 #include "..\Resource Files\ContaCorrente.cpp"
+#include "..\Resource Files\Administrador.cpp"
 int menu();
 int subMenu();
+int menuADM();
+int subMenuADM();
 int main(){
     Banco p;
     ContaPoupanca contaAuxP;
     ContaCorrente contaAuxC;
+    Administrador adm;
+    string nome;
     long int CPF1,CPF2;
-    float valorSaque, valorDeposito;
+    float valorSaque, valorDeposito,valor1;
     int senha, loopSistema;
     int op1,op2;
     while(true){
@@ -111,10 +116,54 @@ int main(){
               }
           }
           break;
-      case 3:
-        cout<<"Case 3"<<endl;
-          p.signOut();
-          return 0;
+        case 3:
+            cout<<"Case 3"<<endl;
+            p.signOut();
+            return 0;
+        case 4:
+            op1=menuADM();
+            switch(op1){
+                case 1:
+                    cout<<"Informe seu CPF:"; cin>>CPF1;
+                    cout<<"Informe seu Nome:"; cin>>nome;
+                    cout<<"Informe sua senha:"; cin>>senha;
+                    adm.setCPF(CPF1);
+                    adm.setNomeDoADM(nome);
+                    adm.setSenha(senha);
+                    p.signUp(adm);
+                    break;
+                case 2:
+                    cout<<"Informe seu CPF:"; cin>>CPF1;
+                    cout<<"Informe sua senha:"; cin>>senha;
+                    loopSistema=p.login(CPF1,senha);
+                    cout<<(loopSistema ? " ": "Senha invalida")<<endl;
+                    while(loopSistema){
+                        op1= subMenuADM();
+                        switch(op1){
+                            case 1:
+                                cout<<"Digite o valor a ser cobrado:"; cin >> valor1;
+                                p.cobrarManutencao(valor1);
+                                cout<<"Cobranca realizada"<<endl;
+                                break;
+                            case 2:
+                                p.calcularJuros();
+                                cout<<"Juros Calculado"<<endl;
+                                break;
+                            case 3:
+                                cout<<"Digite o valor, em porcentagem, do juros:"; cin >> valor1;
+                                p.adicionarJuros(valor1);
+                                cout<<"Valor alterado"<<endl;
+                                break;
+                            case 4:
+                                p.signOut();
+                                break;
+                            default:
+                                cout<<"Opcao nao encontrada";
+
+                        }
+                    }
+            }
+
       }
     }
  }
@@ -128,6 +177,7 @@ int menu(){
   cout<<"[1]Criar Conta"<<endl;
   cout<<"[2]Entrar"<<endl;
   cout<<"[3]Sair"<<endl;
+  cout<<"[4]Administrador"<<endl;
   cout<<setw(40)<<" "<<endl;
   cin>>op;
   return op;
@@ -147,4 +197,22 @@ int subMenu(){
   cout<<setw(40)<<" "<<endl;
   cin>>op;
   return op;
+}
+
+int menuADM(){
+    int op;
+    cout<<"[1]Cadastrar novo adm"<<endl;
+    cout<<"[2]Entrar como adm"<<endl;
+    cin>>op;
+    return op;
+}
+
+int subMenuADM(){
+    int op;
+    cout<<"[1]Fazer cobranca de manutenção das contas correntes"<<endl;
+    cout<<"[2]Adicionar juros nas contas poupancas"<<endl;
+    cout<<"[3]Alterar a porcentagem de juros"<<endl;
+    cout<<"[4]Sair"<<endl;
+    cin>>op;
+    return op;
 }

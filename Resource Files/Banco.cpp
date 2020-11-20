@@ -1,12 +1,14 @@
 #include "..\Header Files\Banco.h"
 
+
 Banco::Banco(){
   carregarDados();
 }
 bool  Banco::salvarDados(){
     fstream arq1("../DadosContaPoupanca.bin",ios::out);
     fstream arq2("../DadosContaCorrente.bin",ios::out);
-    if(!arq1.is_open() or !arq2.is_open()){
+    fstream arq3("../DadosADM.bin",ios::out);
+    if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
       return false;
     }
     for(int i = 0; i < listaDeContasP.size(); i++){
@@ -17,14 +19,20 @@ bool  Banco::salvarDados(){
       auxContaC = listaDeContasC[i];
       arq2.write(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC));
     }
+    for(int i = 0; i < listaDeADM.size(); i++){
+      auxADM = listaDeADM[i];
+      arq3.write(reinterpret_cast<char *>(&auxADM),sizeof(auxADM));
+    }
     arq1.close();
     arq2.close();
+    arq3.close();
     return true;
 }
 bool Banco::carregarDados(){
   fstream arq1("../DadosContaPoupanca.bin",ios::in);
   fstream arq2("../DadosContaCorrente.bin",ios::in);
-  if(!arq1.is_open() or !arq2.is_open()){
+  fstream arq3("../DadosADM.bin");
+  if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
     return false;
   }
   while(arq1.read(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP))){
@@ -33,8 +41,12 @@ bool Banco::carregarDados(){
   while(arq2.read(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC))){
     listaDeContasC.push_back(auxContaC);
   }
+  while(arq3.read(reinterpret_cast<char *>(&auxADM),sizeof(auxADM))){
+    listaDeADM.push_back(auxADM);
+  }
   arq1.close();
   arq2.close();
+  arq3.close();
   return true;
 }
 //Buscar por cadastro no sistema de gerenciamento
@@ -48,6 +60,11 @@ int Banco::encontarConta(long int CPF){
       if(listaDeContasC[i].getUser().getCPF() == CPF) {
           tipoDeConta = 2;
           return i + 2;
+      }
+  for(int i(0);i < listaDeADM.size();i++)
+      if(listaDeADM[i].getCPF()==CPF){
+        tipoDeConta=3;
+        return i + 2;
       }
   return 0;
 }
@@ -66,6 +83,11 @@ bool Banco::verificarLogin(long int CPF, int senha){
         if(listaDeContasC[idConta-2].getSenha() == senha){
           return true;
         }
+    if(idConta and tipoDeConta == 3){
+      if(listaDeADM[idConta-2].getSenha() == senha){
+        return true;
+      }
+    }
     return false;
 }
 
@@ -75,6 +97,10 @@ bool Banco::signUp(ContaPoupanca contaAux){
 }
 bool Banco::signUp(ContaCorrente contaAux){
   listaDeContasC.push_back(contaAux);
+  return true;
+}
+bool Banco::signUp(Administrador admAux){
+  listaDeADM.push_back(admAux);
   return true;
 }
 
@@ -123,7 +149,7 @@ bool Banco::signOut(){
 
      int idConta1(encontarConta(CPF1));
      int idConta2;
-      
+     if(not(idConta1))
          return false;
      if(tipoDeConta == 1){
          idConta2 = encontarConta(CPF2);
@@ -219,5 +245,24 @@ bool Banco::transferirContaCorrente2Poupanca(int idConta1,int idConta2,float val
      }
 
  }
+
+void Banco::cobrarManutencao(float taxa){
+  for(int i=0;i<listaDeContasC.size();i++){
+    listaDeContasC[i].setTaxaDeManutencao(taxa);
+  }
+}
+
+void Banco::adicionarJuros(float Juros){
+  for(int i=0;i<listaDeContasP.size();i++){
+    listaDeContasP[i].setJurosExtra(Juros);
+  }
+}
+
+void Banco::calcularJuros(){
+  for(int i=0;i<listaDeContasP.size();i++){
+    listaDeContasP[i].CalcularJurosExtra();
+  }
+}
+
  Banco::~Banco(){
  }
