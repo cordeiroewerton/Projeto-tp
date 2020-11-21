@@ -35,12 +35,12 @@ int main(){
                 case 1:
                     cout<<"Insira os dados da sua Conta Poupanca"<<endl;
                     cin>>contaAuxP;
-                    p.signUp(contaAuxP);
+                    cout<<(p.signUp(contaAuxP)?"sucesso":"falha, CPF ja cadastrado!")<<endl;
                     break;
                 case 2:
                     cout<<"Insira os dados da sua Conta Corrente"<<endl;
                     cin>>contaAuxC;
-                    p.signUp(contaAuxC);
+                    cout<<(p.signUp(contaAuxC)?"sucesso":"falha, CPF ja cadastrado!")<<endl;
                     break;
             }
             break;
@@ -73,27 +73,28 @@ int main(){
                           cout<<"senha invalida"<<endl;
                           break;
                       }
-                      cout<<"Informe o cpf do destinatario: ";
+                      cout<<"Informe o CPF do destinatario: ";
                       cin>>CPF2;
-                      cout<<"Informe o valor da transferencia: ";
+                      cout<<"Informe o valor da transferencia [BRL]: ";
                       cin>>valorSaque;
-                      cout<<"Transferencia "<<(p.transferencia(CPF1,CPF2,valorSaque)?"nao ":"")<<"realizada"<<endl;
+                      cout<<"Transferencia "<<(p.transferencia(CPF1,CPF2,valorSaque)?"nao ":"realizada")<<endl;
                       break;
                   case 4:
                       if(p.login(CPF1,senha)){
                           cout<<"efetuando saque...";
-//                          p.deletarContas(CPF1,senha);
+                          loopSistema=not(p.deletarContas(CPF1,senha));
+                          p.signOut();
                           cout<<"deletando"<<endl;
                       }
                       break;
                   case 5:
-                     p.consultarDados(CPF1,senha);
+                      p.consultarDados(CPF1,senha);
                       break;
                   case 6:
                       cout<<"Informe seu CPF:";cin>>CPF1;
                       cout<<"Informe sua senha:";cin>>senha;
- //                     if(p.login(CPF1,senha))
- //                         p.modificarDados(CPF1,senha);
+                     if(p.login(CPF1,senha))
+                         p.modificarDados(CPF1,senha);
                       break;
                   default :
                       loopSistema = false;
@@ -101,6 +102,7 @@ int main(){
               }
           }
           break;
+////////////////////////////////////////////pode melhorar?////////////////////////////////////////////////////////
         case 3:
             cout<<"Case 3"<<endl;
             p.signOut();

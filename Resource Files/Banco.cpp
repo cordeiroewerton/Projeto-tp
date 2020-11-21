@@ -1,6 +1,4 @@
 #include "..\Header Files\Banco.h"
-
-
 Banco::Banco(){
   carregarDados();
 }
@@ -11,15 +9,15 @@ bool  Banco::salvarDados(){
     if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
       return false;
     }
-    for(int i = 0; i < listaDeContasP.size(); i++){
+    for(int i (0); i < listaDeContasP.size(); i++){
       auxContaP = listaDeContasP[i];
       arq1.write(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP));
     }
-    for(int i = 0; i < listaDeContasC.size(); i++){
+    for(int i (0); i < listaDeContasC.size(); i++){
       auxContaC = listaDeContasC[i];
       arq2.write(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC));
     }
-    for(int i = 0; i < listaDeADM.size(); i++){
+    for(int i (0); i < listaDeADM.size(); i++){
       auxADM = listaDeADM[i];
       arq3.write(reinterpret_cast<char *>(&auxADM),sizeof(auxADM));
     }
@@ -63,7 +61,7 @@ int Banco::encontarConta(long int CPF){
       }
   for(int i(0);i < listaDeADM.size();i++)
       if(listaDeADM[i].getCPF()==CPF){
-        tipoDeConta=3;
+        tipoDeConta = 3;
         return i + 2;
       }
   return 0;
@@ -92,10 +90,14 @@ bool Banco::verificarLogin(long int CPF, int senha){
 }
 
 bool Banco::signUp(ContaPoupanca contaAux){
+  if(encontarConta(contaAux.getUser().getCPF()))
+    return false;
   listaDeContasP.push_back(contaAux);
   return true;
 }
 bool Banco::signUp(ContaCorrente contaAux){
+  if(encontarConta(contaAux.getUser().getCPF()))
+    return false;
   listaDeContasC.push_back(contaAux);
   return true;
 }
@@ -109,42 +111,40 @@ bool Banco::signOut(){
   return 0;
 }
 
-// bool Banco::deletarContas(long int CPF,int senha){
-//   // if(not(verificarLogin(CPF,senha)))
-//   //   return false;
-//   // int idConta(encontarConta(CPF));
-//   // if(idConta){
-//   //     listaDeContasP[idConta-2] =listaDeContasP[listaDeContasP.size()-1];
-//   //     listaDeContasP.pop_back();
-//   //     cout<<"Não conseguir usar o erase"<<endl;
-//   //     return true;
-//   // }
-//   // if(idConta){
-//   //     listaDeContasC[idConta-2] = listaDeContasC[listaDeContasC.size()-1];
-//   //     listaDeContasP.pop_back();
-//   //     cout<<"Não conseguir usar o erase"<<endl;
-//   //     return true;
-//   // }
-//   // return false;
-// }
+bool Banco::deletarContas(long int CPF,int senha){
+  int idConta(encontarConta(CPF));
+  if(not(verificarLogin(CPF,senha)) and not(idConta))
+    return false;
+  if(tipoDeConta == 1){
+      listaDeContasP.erase(listaDeContasP.begin()+(idConta-2),listaDeContasP.begin()+(idConta-2)+1);
+      return true;
+  }else if(tipoDeConta == 2){
+      listaDeContasC.erase(listaDeContasC.begin()+(idConta-2),listaDeContasC.begin()+(idConta-2)+1);
+      return true;
+  }else{
+    cout<<"Erwerton termina a parte de administrador!"<<endl;
+  }
+  return false;
+}
 
-// bool Banco::modificarDados(long int CPF, int senha){
-//   int idConta(encontarConta(CPF));
-//   if(idConta){
-//     cout<<"Dados antigos:"<<endl;
-//     cout<<listaDeContas[idConta-2];
-//     cin>>listaDeContas[idConta-2];
-//     return true;
-//   }
-//   return false;
-// }
-
- bool Banco::ordenarLista(){
-   //sort(listaDeContas.begin(),listaDeContas.end());
-   return true;
- }
- //
-
+bool Banco::modificarDados(long int CPF, int senha){
+  int idConta(encontarConta(CPF));
+  if(not(idConta))
+    return false;
+  cout<<"Dados antigos:"<<endl;
+  if(tipoDeConta ==1){
+    cout<<listaDeContasP[idConta-2];
+    cin>>listaDeContasP[idConta-2];
+    return true;
+  }else if(tipoDeConta ==2){
+    cout<<listaDeContasC[idConta-2];
+    cin>>listaDeContasC[idConta-2];
+    return true;
+  }else{
+    cout<<"Erwerton termina a parte de administrador!"<<endl;
+  }
+  return false;
+}
  bool Banco::transferencia(long int CPF1,long int CPF2, float valor){
 
      int idConta1(encontarConta(CPF1));
@@ -230,7 +230,7 @@ bool Banco::transferirContaCorrente2Poupanca(int idConta1,int idConta2,float val
 
  void Banco::consultarDados(const long int & CPF, const int & senha){
      int idConta=(encontarConta(CPF))-2;
-     if(tipoDeConta==1) {
+     if(tipoDeConta == 1) {
          cout << "Nome:" << listaDeContasP[idConta].getUser().getNomeDoUsuario() << endl;
          cout << "Idade: " << listaDeContasP[idConta].getUser().getIdade() << endl;
          cout << "CPF: " << listaDeContasP[idConta].getUser().getCPF() << endl;

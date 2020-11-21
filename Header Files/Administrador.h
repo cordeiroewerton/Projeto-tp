@@ -1,6 +1,6 @@
 #ifndef ADMINISTRADOR_H
 #define ADMINISTRADOR_H
-
+//ERWERTON TERMINA O ADMINISTRADOR!
 class Administrador{
 private:
     long int CPF;
@@ -16,5 +16,4 @@ public:
     string getNomeDoADM();
 
 };
-
 #endif
