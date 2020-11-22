@@ -142,6 +142,7 @@ int main(){
                                 cout<<"Valor alterado"<<endl;
                                 break;
                             case 4:
+                                loopSistema = false;
                                 p.signOut();
                                 break;
                             default:
@@ -196,7 +197,7 @@ int menuADM(){
 
 int subMenuADM(){
     int op;
-    cout<<"[1]Fazer cobranca de manutenção das contas correntes"<<endl;
+    cout<<"[1]Fazer cobranca de manutencao das contas correntes"<<endl;
     cout<<"[2]Adicionar juros nas contas poupancas"<<endl;
     cout<<"[3]Alterar a porcentagem de juros"<<endl;
     cout<<"[4]Sair"<<endl;

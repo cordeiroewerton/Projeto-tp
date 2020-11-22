@@ -5,11 +5,11 @@
 class ContaCorrente:public Conta{
 
     private:
-      int taxaDeManutencao;
+      float taxaDeManutencao;
     public:
       //RETIRE AS CHAVES QUANDO FOR DEFINIR O CONSTRUTOR
       ContaCorrente(const Usuario & = {"0",0,0,{"0","0","0","0"}},const int &  = 0,const float & = 0);
-      void setTaxaDeManutencao(const int &); //desconto para a manutenção da conta corrente (geralmente 15 reais por mes)
+      void setTaxaDeManutencao(const float &); //desconto para a manutenção da conta corrente (geralmente 15 reais por mes)
       void CalcularTaxaDeManutencao(const float &);
 };
 
