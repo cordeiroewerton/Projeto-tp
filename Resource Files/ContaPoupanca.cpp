@@ -10,5 +10,5 @@ void ContaPoupanca::setJurosExtra (const float & jurosExtra){
 //O JUROS É DETERMINADO EM %
 //ESSE JUROS DEVERAR SER DESCONTADO PELO ADM
 void ContaPoupanca::CalcularJurosExtra(){
-    setSaldo(getSaldo()*(1-jurosExtra/100));
+    setSaldo((getSaldo()*(jurosExtra/100))+getSaldo());
 }
