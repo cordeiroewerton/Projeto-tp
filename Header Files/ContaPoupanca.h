@@ -8,7 +8,7 @@ class ContaPoupanca:public Conta{
     public:
       //RETIRE AS CHAVES QUANDO FOR DEFINIR O CONSTRUTOR
       ContaPoupanca(const Usuario & = {"0",0,0,{"0","0","0","0"}}, const float &  = 0, const float & = 0);
-      void setJurosExtra(const int &);
+      void setJurosExtra(const float &);
       void CalcularJurosExtra();
 };
 #endif
