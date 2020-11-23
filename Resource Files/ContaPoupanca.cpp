@@ -1,14 +1,14 @@
 #include "..\Header Files\ContaPoupanca.h"
 
-ContaPoupanca::ContaPoupanca(const Usuario & user, const int & jurosExtra,const float & saldo):Conta(user,saldo){
+ContaPoupanca::ContaPoupanca(const Usuario & user, const float & jurosExtra,const float & saldo):Conta(user,saldo){
   this->jurosExtra=jurosExtra;
 }
-void ContaPoupanca::setJurosExtra (const int & jurosExtra){
+void ContaPoupanca::setJurosExtra (const float & jurosExtra){
     this-> jurosExtra = jurosExtra;
 }
 //JUROS QUE A CONTA RENDE
 //O JUROS É DETERMINADO EM %
-//ESSE JUROS É ANUAL, POIS NAO TEMOS UM RELÓGIO PARA DESCONTÁ-LO MENSALMENTE
+//ESSE JUROS DEVERAR SER DESCONTADO PELO ADM
 void ContaPoupanca::CalcularJurosExtra(){
-    setSaldo(getSaldo()*(jurosExtra/100));
+    setSaldo(getSaldo()*(1-jurosExtra/100));
 }

@@ -189,8 +189,8 @@ int subMenu(){
 
 int menuADM(){
     int op;
-    cout<<"[1]Cadastrar novo adm"<<endl;
-    cout<<"[2]Entrar como adm"<<endl;
+    cout<<"[1]Cadastrar novo administrador"<<endl;
+    cout<<"[2]Entrar como administrador"<<endl;
     cin>>op;
     return op;
 }
