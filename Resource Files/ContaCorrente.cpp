@@ -1,6 +1,5 @@
 #include "..\Header Files\ContaCorrente.h"
 
-//
 ContaCorrente::ContaCorrente(const Usuario & user,const float & taxaDeManutencao,const float & saldo):Conta(user,saldo){
   this->taxaDeManutencao=taxaDeManutencao;
 }
