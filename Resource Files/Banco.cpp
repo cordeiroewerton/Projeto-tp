@@ -146,7 +146,7 @@ bool Banco::modificarDados(long int CPF, int senha){
   return false;
 }
  bool Banco::transferencia(long int CPF1,long int CPF2, float valor){
-     if(CPF1 == CPF2 or not(encontarConta(CPF1) or encontarConta(CPF2)))
+     if(CPF1== CPF2 or not(encontarConta(CPF1) or encontarConta(CPF2)))
          return false;
     if(!sacar(valor, CPF1))
         return false;
