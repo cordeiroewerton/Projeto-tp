@@ -15,10 +15,6 @@ class Banco/*:public ContaPoupanca,public ContaCorrente*/{
       bool verificarLogin(long int, int);
       int  encontarConta(long int);//Ok
       bool carregarDados();
-      bool transferirContaPoupanca2Poupanca(int,int,float);
-      bool transferirContaPoupanca2Corrente(int,int,float);
-      bool transferirContaCorrente2Corrente(int,int,float);
-      bool transferirContaCorrente2Poupanca(int,int,float);
     public:
       Banco();
       bool login(long int,int);//OK

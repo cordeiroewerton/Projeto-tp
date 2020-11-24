@@ -146,64 +146,25 @@ bool Banco::modificarDados(long int CPF, int senha){
   return false;
 }
  bool Banco::transferencia(long int CPF1,long int CPF2, float valor){
-
-     int idConta1(encontarConta(CPF1));
-     int idConta2;
-     if(not(idConta1))
+     if(not(encontarConta(CPF1)or encontarConta(CPF2)))
          return false;
-     if(tipoDeConta == 1){
-         idConta2 = encontarConta(CPF2);
-         if(not(idConta2))
-             return false;
-         if(tipoDeConta == 1)
-              transferirContaPoupanca2Poupanca(idConta1-2,idConta2-2,valor);
-          else
-              transferirContaPoupanca2Corrente(idConta1-2,idConta2-2,valor);
-     }else{
-         idConta2=encontarConta(CPF2);
-         if(not(idConta2))
-             return false;
-         if(tipoDeConta == 1)
-             transferirContaCorrente2Corrente(idConta1-2,idConta2-2,valor);
-         else
-             transferirContaCorrente2Poupanca(idConta1-2,idConta2-2,valor);
-     }
-     return true;
+    if(!sacar(valor, CPF1))
+        return false;
+    depositar(valor,CPF2);
+    return true;
  }
-bool Banco::transferirContaPoupanca2Poupanca(int idConta1,int idConta2, float valor){
-    listaDeContasP[idConta1].setSaldo(listaDeContasP[idConta1].getSaldo() - valor);
-    listaDeContasP[idConta2].setSaldo(listaDeContasP[idConta2].getSaldo() + valor);
-    return true;
-}
-bool Banco::transferirContaPoupanca2Corrente(int idConta1,int idConta2,float valor){
-    listaDeContasP[idConta1].setSaldo(listaDeContasP[idConta1].getSaldo() - valor);
-    listaDeContasC[idConta2].setSaldo(listaDeContasC[idConta2].getSaldo() + valor);
-    return true;
-
-}
-bool Banco::transferirContaCorrente2Corrente(int idConta1,int idConta2,float valor){
-    listaDeContasC[idConta1].setSaldo(listaDeContasC[idConta1].getSaldo() - valor);
-    listaDeContasC[idConta2].setSaldo(listaDeContasC[idConta2].getSaldo() + valor);
-    return true;
-
-}
-bool Banco::transferirContaCorrente2Poupanca(int idConta1,int idConta2,float valor){
-    listaDeContasC[idConta1].setSaldo(listaDeContasC[idConta1].getSaldo() - valor);
-    listaDeContasP[idConta2].setSaldo(listaDeContasP[idConta2].getSaldo() + valor);
-    return true;
-}
 
  bool Banco::sacar(const float & valorDoSaque,const long int & CPF){
      int idConta(encontarConta(CPF));
-     if(not(idConta))
+     if(not(idConta) or valorDoSaque < 0)
          return false;
      if(tipoDeConta == 1) {
-         if (valorDoSaque > listaDeContasP[encontarConta(CPF) - 2].getSaldo()) {
+         if (valorDoSaque > listaDeContasP[idConta - 2].getSaldo()) {
              return false;
          }
          listaDeContasP[idConta- 2].setSaldo(listaDeContasP[idConta- 2].getSaldo() - valorDoSaque);
      }else{
-         if (valorDoSaque > listaDeContasC[encontarConta(CPF) - 2].getSaldo()) {
+         if (valorDoSaque > listaDeContasC[idConta - 2].getSaldo()) {
              return false;
          }
          listaDeContasC[idConta- 2].setSaldo(listaDeContasC[idConta- 2].getSaldo() - valorDoSaque);
@@ -223,7 +184,7 @@ bool Banco::transferirContaCorrente2Poupanca(int idConta1,int idConta2,float val
          if (valorDoDeposito < 0) {
              return false;
          }
-         listaDeContasP[idConta - 2].setSaldo(listaDeContasP[idConta - 2].getSaldo() + valorDoDeposito);
+         listaDeContasC[idConta - 2].setSaldo(listaDeContasC[idConta - 2].getSaldo() + valorDoDeposito);
      }
      return true;
  }

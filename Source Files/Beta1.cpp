@@ -77,7 +77,7 @@ int main(){
                       cin>>CPF2;
                       cout<<"Informe o valor da transferencia [BRL]: ";
                       cin>>valorSaque;
-                      cout<<"Transferencia "<<(p.transferencia(CPF1,CPF2,valorSaque)?"nao ":"realizada")<<endl;
+                      cout<<"Transferencia "<<(!p.transferencia(CPF1,CPF2,valorSaque)?"nao ":"realizada")<<endl;
                       break;
                   case 4:
                       if(p.login(CPF1,senha)){
