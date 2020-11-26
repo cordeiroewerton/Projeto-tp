@@ -122,7 +122,6 @@ bool Banco::deletarContas(long int CPF,int senha){
       listaDeContasC.erase(listaDeContasC.begin()+(idConta-2),listaDeContasC.begin()+(idConta-2)+1);
       return true;
   }else{
-    cout<<"Erwerton termina a parte de administrador!"<<endl;
   }
   return false;
 }
@@ -141,7 +140,6 @@ bool Banco::modificarDados(long int CPF, int senha){
     cin>>listaDeContasC[idConta-2];
     return true;
   }else{
-    cout<<"Erwerton termina a parte de administrador!"<<endl;
   }
   return false;
 }
