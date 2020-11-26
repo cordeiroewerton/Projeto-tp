@@ -34,7 +34,8 @@ int main(){
             switch (op2){
                 case 1:
                     cout<<"Insira os dados da sua Conta Poupanca"<<endl;
-                    cin>>contaAuxP;
+                      cin>>contaAuxP;
+
                     cout<<(p.signUp(contaAuxP)?"sucesso":"falha, CPF ja cadastrado!")<<endl;
                     break;
                 case 2:
@@ -102,8 +103,7 @@ int main(){
               }
           }
           break;
-////////////////////////////////////////////pode melhorar?////////////////////////////////////////////////////////
-        case 3:
+      case 3:
             cout<<"Case 3"<<endl;
             p.signOut();
             return 0;
@@ -167,7 +167,18 @@ int menu(){
   cout<<"[3]Sair"<<endl;
   cout<<"[4]Administrador"<<endl;
   cout<<setw(40)<<" "<<endl;
-  cin>>op;
+  try{
+	 cin>>op;
+	 if(cin.fail())
+		throw "Caracter invalido";
+	 if(op > 4 or op < 1)
+		throw "Opcao invalida";
+ }catch(const char * e){
+	cin.clear();
+	cin.ignore(256,'\n');
+	cout<<e<<endl;
+	return menu();
+ }
   return op;
 }
 //implementar as exceções
@@ -183,7 +194,18 @@ int subMenu(){
   cout<<"[6]Modificar Dados"<<endl;
   cout<<"[7]sair"<<endl;
   cout<<setw(40)<<" "<<endl;
-  cin>>op;
+  try{
+	 cin>>op;
+	 if(cin.fail())
+		throw "Caracter invalido";
+	 if(op > 7 or op < 1)
+		throw "Opcao invalida";
+ }catch(const char * e){
+	cin.clear();
+	cin.ignore(256,'\n');
+	cout<<e<<endl;
+	return subMenu();
+ }	
   return op;
 }
 
@@ -191,7 +213,18 @@ int menuADM(){
     int op;
     cout<<"[1]Cadastrar novo administrador"<<endl;
     cout<<"[2]Entrar como administrador"<<endl;
-    cin>>op;
+     try{
+	 cin>>op;
+	 if(cin.fail())
+		throw "Caracter invalido";
+	 if(op > 2 or op < 1)
+		throw "Opcao invalida";
+      }catch(const char * e){
+	cout<<e<<endl;
+	cin.clear();
+	cin.ignore(256,'\n');
+	return menuADM();
+     }
     return op;
 }
 
@@ -201,6 +234,17 @@ int subMenuADM(){
     cout<<"[2]Adicionar juros nas contas poupancas"<<endl;
     cout<<"[3]Alterar a porcentagem de juros"<<endl;
     cout<<"[4]Sair"<<endl;
-    cin>>op;
+     try{
+	 cin>>op;
+	 if(cin.fail())
+		throw "Caracter invalido";
+	 if(op > 4 or op < 1)
+		throw "Opcao invalida";
+      }catch(const char * e){
+	cout<<e<<endl;
+	cin.clear();
+	cin.ignore(256,'\n');
+	return subMenuADM();
+     }
     return op;
 }
