@@ -209,7 +209,7 @@ bool Banco::modificarDados(long int CPF, int senha){
 
 void Banco::cobrarManutencao(float taxa){
   for(int i=0;i<listaDeContasC.size();i++){
-    listaDeContasC[i].setTaxaDeManutencao(taxa);
+    listaDeContasC[i].CalcularTaxaDeManutencao(taxa);
   }
 }
 
