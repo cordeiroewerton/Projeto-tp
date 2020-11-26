@@ -14,7 +14,7 @@ istream & operator>>(istream & is,Usuario & auxUsuario){
 	int idade;
 	long int CPF;
 	Endereco endereco;
-	cin.ignore();
+	cin.ignore(256,'\n');
 	try{
 			cout<<"Nome: ";getline(cin,nome);
 			cout<<"Idade: ";cin>>idade;
