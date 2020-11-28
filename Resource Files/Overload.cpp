@@ -1,17 +1,17 @@
 #include "..\Header Files\Conta.h"
 template<typename  T>
-void exceptInput(T & auxT){
+void exceptInput(T & auxT, string auxTemp){
     bool loop = true;
     while(loop){
         try {
             cin >> auxT;
             if (cin.fail()) {
-                throw ("Caracter invalido.");
+                throw "Caracter invalido, informe novamente ";
             } else {
                 loop = false;
             }
         }catch(const char * e){
-            cout<<e<<endl;
+            cout<<e<<auxTemp+": ";
             cin.clear();
             cin.ignore(256,'\n');
         }
@@ -32,16 +32,16 @@ istream & operator>>(istream & is,Usuario & auxUsuario){
 	cin.ignore(256,'\n');
 	cout<<"Nome: ";getline(cin,nome);
 	cout<<"Idade: ";
-	exceptInput(idade);
+	exceptInput(idade,"sua idade");
 	cout<<"CPF: ";
-    exceptInput(CPF);
-    cin.ignore();
-    cout<<"Rua: ";getline(cin,endereco.rua);
-    cout<<"Cep: ";getline(cin,endereco.CEP);
-    cout<<"Cidade: ";getline(cin,endereco.cidade);cout<<"Estado: ";getline(cin,endereco.estado);
-    auxUsuario.setNomeDoUsuario(nome);
-    auxUsuario.setIdade(idade);
-    auxUsuario.setCPF(CPF);
+  exceptInput(CPF, "seu CPF");
+  cin.ignore();
+  cout<<"Rua: ";getline(cin,endereco.rua);
+  cout<<"Cep: ";getline(cin,endereco.CEP);
+  cout<<"Cidade: ";getline(cin,endereco.cidade);cout<<"Estado: ";getline(cin,endereco.estado);
+  auxUsuario.setNomeDoUsuario(nome);
+  auxUsuario.setIdade(idade);
+  auxUsuario.setCPF(CPF);
 	auxUsuario.setEnderecoDoUsuario(endereco);
 	return is;
 }
@@ -58,8 +58,9 @@ istream & operator>>(istream & in, Conta & contaAux){
     Usuario auxUser;
     cin>>auxUser;
     cout<<"senha: ";
-    exceptInput(senha);
-    contaAux.setSenha(senha);	
+    exceptInput(senha,"sua senha");
+    contaAux.setSenha(senha);
     contaAux.setUser(auxUser);
+    system("cls");
     return in;
 }

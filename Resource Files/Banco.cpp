@@ -228,18 +228,20 @@ bool Banco::verComprovanteDeTransferencia(const long int & CPF1,const long int& 
 
  void Banco::consultarDados(const long int & CPF, const int & senha){
      int idConta=(localizarIndeceDaContaNosVectos(CPF))-2;
+     cout.fill('_');
+     cout << setw(40) << " " << endl;
      if(tipoDeConta == 1) {
          cout << "Nome:" << listaDeContasP[idConta].getUser().getNomeDoUsuario() << endl;
          cout << "Idade: " << listaDeContasP[idConta].getUser().getIdade() << endl;
          cout << "CPF: " << listaDeContasP[idConta].getUser().getCPF() << endl;
          cout << "Saldo: " << listaDeContasP[idConta].getSaldo() << endl;
-         cout << "endereco: " << listaDeContasP[idConta].getUser().getEnderecoDoUsuario() << endl;
+         cout << "Endereco: " << listaDeContasP[idConta].getUser().getEnderecoDoUsuario() << endl;
      }else{
          cout << "Nome:" << listaDeContasC[idConta].getUser().getNomeDoUsuario() << endl;
          cout << "Idade: " << listaDeContasC[idConta].getUser().getIdade() << endl;
          cout << "CPF: " << listaDeContasC[idConta].getUser().getCPF() << endl;
          cout << "Saldo: " << listaDeContasC[idConta].getSaldo() << endl;
-         cout << "endereco: " << listaDeContasC[idConta].getUser().getEnderecoDoUsuario() << endl;
+         cout << "Endereco: " << listaDeContasC[idConta].getUser().getEnderecoDoUsuario() << endl;
      }
 
  }

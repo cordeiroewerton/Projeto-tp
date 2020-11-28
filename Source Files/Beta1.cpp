@@ -29,10 +29,15 @@ int main() {
         int op(menu());
         switch (op) {
             case 1:
+                cout.fill('_');
+                cout << setw(40) << " " << endl;
                 cout << "[1] Conta Poupanca" << endl;
                 cout << "[2] Conta Corrente" << endl;
                 cout << "[3] Cadastrar administrador" << endl;
-                exceptInput((op2));
+                cout << setw(40) << " " << endl;
+                cout<<">>";
+                exceptInput(op2,"a opcao");
+                system("cls");
                 switch (op2) {
                     case 1:
                         cout << "Insira os dados da sua Conta Poupanca" << endl;
@@ -45,9 +50,10 @@ int main() {
                         cout << (p.signUp(contaAuxC) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
                         break;
                     case 3:
+                        cout << "Insira os dados do Administrador" << endl;
                         cin >> userAux;
                         cout << "Informe sua senha:";
-                        exceptInput(senha);
+                        exceptInput(senha,"sua senha");
                         adm.setUser(userAux);
                         adm.setSenha(senha);
                         cout << (p.signUp(adm) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
@@ -56,36 +62,36 @@ int main() {
                 break;
             case 2:
                 cout << "Informe seu CPF:";
-                exceptInput(CPF1);
+                exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
-                exceptInput(senha);
+                exceptInput(senha,"sua senha");
                 loopSistema = p.login(CPF1, senha);
                 cout << (loopSistema ? " " : "senha invalida") << endl;
                 while (loopSistema) {
                     op1 = subMenu();
                     switch (op1) {
                         case 1:
-                            cout << "Informe o valor do saque[BRL]:";
-                            exceptInput(valorSaque);
+                            cout << "Informe o valor do saque [BRL]:";
+                            exceptInput(valorSaque,"o valor do saque  [BRL]");
                             cout << "Informe sua senha:";
-                            exceptInput(senha);
+                            exceptInput(senha,"sua senha");
                             cout << "Saque " << (p.sacar(valorSaque, CPF1) ? "realizado!" : "recusado!") << endl;
                             break;
                         case 2:
                             cout << "Informe o valor do deposito    [BRL]:";
-                            exceptInput(valorDeposito);
+                            exceptInput(valorDeposito,"Valor do deposito  [BRL]");
                             cout << "Informe sua senha:";
-                            exceptInput(senha);
+                            exceptInput(senha,"sua senha");
                             cout << "Deposito " << (p.depositar(valorDeposito, CPF1) ? "realizado!" : " recusado!")
                                  << endl;
                             break;
                         case 3:
                             cout << "Informe o CPF do destinatario: ";
-                            exceptInput(CPF2);
+                            exceptInput(CPF2,"o CPF do destinatario ");
                             cout << "Informe o valor da transferencia [BRL]: ";
-                            exceptInput(valorSaque);
+                            exceptInput(valorSaque,"o valor da transferencia [BRL]");
                             cout << "Informe sua senha:";
-                            exceptInput(senha);
+                            exceptInput(senha,"sua senha");
                             if (not(p.login(CPF1, senha))) {
                                 cout << "senha invalida" << endl;
                                 break;
@@ -97,14 +103,14 @@ int main() {
                               cout<<"Ver comprovante?"<<endl;
                               cout<<"[1] Sim"<<endl;
                               cout<<"[2] Nao"<<endl;
-                              exceptInput(op);
+                              exceptInput(op,"a opcao");
                               if(op == 1)
                                 p.verComprovanteDeTransferencia(CPF1,CPF2,valorSaque);
                             }
                             break;
                         case 4:
                             cout << "Informe sua senha:";
-                            exceptInput(senha);
+                            exceptInput(senha,"sua senha");
                             if (p.login(CPF1, senha)) {
                                 cout << "efetuando saque...";
                                 loopSistema = not(p.deletarContas(CPF1, senha));
@@ -117,7 +123,7 @@ int main() {
                             break;
                         case 6:
                             cout << "Informe sua senha:";
-                            exceptInput(senha);
+                            exceptInput(senha,"sua senha");
                             if (p.login(CPF1, senha))
                                 p.modificarDados(CPF1, senha);
                             break;
@@ -129,9 +135,9 @@ int main() {
                 break;
             case 3:
                 cout << "Informe seu CPF:";
-                exceptInput(CPF1);
+                exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
-                exceptInput(senha);
+                exceptInput(senha,"sua senha");
                 loopSistema = p.login(CPF1, senha);
                 cout << (loopSistema ? " " : "Senha invalida") << endl;
                 while (loopSistema) {
@@ -139,7 +145,7 @@ int main() {
                     switch (op1) {
                         case 1:
                             cout << "Digite o valor a ser cobrado:";
-                            exceptInput(valor1);
+                            exceptInput(valor1,"o valor a ser cobrado");
                             p.cobrarManutencao(valor1);
                             cout << "Cobranca realizada" << endl;
                             break;
@@ -149,7 +155,7 @@ int main() {
                             break;
                         case 3:
                             cout << "Digite o valor, em porcentagem, do juros:";
-                            exceptInput(valor1);
+                            exceptInput(valor1,"o valor, em porcentagem, do juros");
                             p.adicionarJuros(valor1);
                             cout << "Valor alterado" << endl;
                             break;
@@ -184,7 +190,9 @@ int menu(){
   cout << "[3]Entrar como administrador" << endl;
   cout << "[4]Sair" << endl;
   cout<<setw(40)<<" "<<endl;
-  exceptInput(op);
+  cout<<">>";
+  exceptInput(op,"a opcao");
+  system("cls");
   return op;
 }
 int subMenu(){
@@ -199,7 +207,9 @@ int subMenu(){
   cout << "[6]Modificar Dados" << endl;
   cout << "[7]sair"<< endl;
   cout << setw(40) << " " << endl;
-  exceptInput(op);
+  cout<<">>";
+  exceptInput(op,"a opcao");
+  system("cls");
   return op;
 }
 int subMenuADM(){
@@ -212,6 +222,8 @@ int subMenuADM(){
     cout << "[4]Imprimir Lista de Contas" << endl;
     cout << "[5]Sair" << endl;
     cout << setw(40) << " " << endl;
-    exceptInput(op);
+    cout<<">>";
+    exceptInput(op,"a opcao");
+    system("cls");
     return op;
 }
