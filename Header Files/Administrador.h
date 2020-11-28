@@ -1,19 +1,16 @@
+#include "..\Header Files\Usuario.h"
 #ifndef ADMINISTRADOR_H
 #define ADMINISTRADOR_H
-//ERWERTON TERMINA O ADMINISTRADOR!
 class Administrador{
 private:
-    long int CPF;
+    Usuario userM;
     int senha;
-    string nomeDoADM;
 public:
-    Administrador(long int=0,int=0,string="");
-    void setCPF(long int);
-    void setSenha(int);
-    void setNomeDoADM(string);
-    long int getCPF();
-    int getSenha();
-    string getNomeDoADM();
-
+    Administrador(const Usuario & = {"0",0,0,{"0","0","0","0"}},const int & = 0);
+    void setSenha(const int&);
+    int getSenha()const;
+    void setUser(const Usuario & userM);
+    Usuario getUser()const;
+    ~Administrador();
 };
 #endif

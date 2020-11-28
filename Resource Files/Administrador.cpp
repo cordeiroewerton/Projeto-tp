@@ -1,31 +1,20 @@
 #include "..\Header Files\Administrador.h"
-
-Administrador::Administrador(long int CPF,int senha,string NomeDoADM){
-    this->CPF=CPF;
-    this->senha=senha;
-    this->nomeDoADM=NomeDoADM;
+Administrador::Administrador(const Usuario & userM, const int & senha){
+    setUser(userM);
+    setSenha(senha);
 }
-
-void Administrador::setCPF(long int CPF){
-    this->CPF=CPF;
-}
-
-void Administrador::setSenha(int senha){
+void Administrador::setSenha(const int & senha){
     this->senha=senha;
 }
-
-void Administrador::setNomeDoADM(string nomeDoADM){
-    this->nomeDoADM=nomeDoADM;
+void Administrador::setUser(const Usuario & userM){
+    this->userM = userM;
 }
-
-long int Administrador::getCPF(){
-    return CPF;
+Usuario Administrador::getUser()const{
+    return userM;
 }
-
-int Administrador::getSenha(){
+int Administrador::getSenha()const{
     return senha;
 }
+Administrador::~Administrador(){
 
-string Administrador::getNomeDoADM(){
-    return nomeDoADM;
 }

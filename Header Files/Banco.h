@@ -5,34 +5,37 @@
 #define _BANCO_H
 class Banco/*:public ContaPoupanca,public ContaCorrente*/{
     private:
+
+      int tipoDeConta;
       vector<ContaPoupanca>listaDeContasP;
       vector<ContaCorrente>listaDeContasC;
       vector<Administrador>listaDeADM;
       ContaPoupanca auxContaP;
       ContaCorrente auxContaC;
       Administrador auxADM;
-      int tipoDeConta;
-      bool verificarLogin(long int, int);
-      int  encontarConta(long int);//Ok
+      bool verificarLogin(const long int &,const int&);
+      int  encontarConta(const long int &);//Ok
+      bool salvarDados();//OK
       bool carregarDados();
-    public:
+public:
       Banco();
-      bool login(long int,int);//OK
+      bool login(const long int &,const int &);//OK
       bool signUp(ContaCorrente);//OK
       bool signUp(ContaPoupanca);//OK
-      bool signUp(Administrador);
+      bool signUp(Administrador);//ok
       bool signOut();//Ok
-      bool deletarContas(long int, int);
-      bool modificarDados(long int ,int );
-      bool ordenarLista();
-      bool transferencia(long int,long int, float);
-      bool salvarDados();//OK
+
+      bool deletarContas(const long int &, const int&);
+      bool modificarDados(const long int & ,const int&);
       void consultarDados(const long int &, const int &);//ok
-      int menu();//Ok
+
       bool sacar(const float &,const long int &);
       bool depositar(const float &,const long int &);
-      void cobrarManutencao(float);
-      void adicionarJuros(float);
+      bool transferencia(const long int &,const long int&,const float&);
+
+      void cobrarManutencao(const float &);
+      bool imprimir()const;
+      void adicionarJuros(const float &);
       void calcularJuros();
       ~Banco();
 };

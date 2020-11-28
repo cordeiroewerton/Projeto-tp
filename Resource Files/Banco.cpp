@@ -1,4 +1,5 @@
 #include "..\Header Files\Banco.h"
+#include <algorithm>
 Banco::Banco(){
   carregarDados();
 }
@@ -29,7 +30,7 @@ bool  Banco::salvarDados(){
 bool Banco::carregarDados(){
   fstream arq1("../DadosContaPoupanca.bin",ios::in);
   fstream arq2("../DadosContaCorrente.bin",ios::in);
-  fstream arq3("../DadosADM.bin");
+  fstream arq3("../DadosADM.bin",ios::in);
   if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
     return false;
   }
@@ -47,8 +48,8 @@ bool Banco::carregarDados(){
   arq3.close();
   return true;
 }
-//Buscar por cadastro no sistema de gerenciamento
-int Banco::encontarConta(long int CPF){
+//Buscar pelo cadastro nos vectos
+int Banco::encontarConta(const long int & CPF){
   for(int i(0);i < listaDeContasP.size();i++)
     if(listaDeContasP[i].getUser().getCPF() == CPF) {
         tipoDeConta = 1;
@@ -60,18 +61,16 @@ int Banco::encontarConta(long int CPF){
           return i + 2;
       }
   for(int i(0);i < listaDeADM.size();i++)
-      if(listaDeADM[i].getCPF()==CPF){
+      if(listaDeADM[i].getUser().getCPF()==CPF){
         tipoDeConta = 3;
         return i + 2;
       }
   return 0;
 }
-
-bool Banco::login(long int CPF, int senha){
+bool Banco::login(const long int & CPF,const int & senha){
   return verificarLogin(CPF, senha);
 }
-
-bool Banco::verificarLogin(long int CPF, int senha){
+bool Banco::verificarLogin(const long int & CPF,const int & senha){
     int idConta = encontarConta(CPF);
     if(idConta and tipoDeConta == 1)
         if(listaDeContasP[idConta-2].getSenha() == senha){
@@ -102,6 +101,8 @@ bool Banco::signUp(ContaCorrente contaAux){
   return true;
 }
 bool Banco::signUp(Administrador admAux){
+  if(encontarConta(admAux.getUser().getCPF()))
+      return false;
   listaDeADM.push_back(admAux);
   return true;
 }
@@ -111,7 +112,7 @@ bool Banco::signOut(){
   return 0;
 }
 
-bool Banco::deletarContas(long int CPF,int senha){
+bool Banco::deletarContas(const long int & CPF,const int & senha){
   int idConta(encontarConta(CPF));
   if(not(verificarLogin(CPF,senha)) and not(idConta))
     return false;
@@ -125,13 +126,32 @@ bool Banco::deletarContas(long int CPF,int senha){
   }
   return false;
 }
-
-bool Banco::modificarDados(long int CPF, int senha){
+bool Banco::imprimir()const{
+  cout.fill('_');
+  cout << "Lista de Contas Poupancas" << endl;
+  if(!listaDeContasP.size())
+      cout << "Lista Vazia" << endl;
+  for (int i(0); i < listaDeContasP.size(); i++){
+    cout << setw(30) << " "<< endl;
+    cout << "[" << i << "]" << "Nome: " << listaDeContasP[i].getUser().getNomeDoUsuario() << "| Idade:" << listaDeContasP[i].getUser().getIdade() << "| Saldo:" << listaDeContasP[i].getSaldo() << endl;
+    cout << setw(30) << " " << endl;
+  }
+  cout << "Lista de Contas Correntes" << endl;
+  if(!listaDeContasP.size())
+      cout << "Lista Vazia" << endl;
+  for(int i(0); i < listaDeContasC.size(); i++){
+    cout << setw(30) << " " << endl;
+    cout << "["<< i << "]" << "Nome: " << listaDeContasC[i].getUser().getNomeDoUsuario()<<"| Idade:"<<listaDeContasC[i].getUser().getIdade()<<"| Saldo:"<<listaDeContasC[i].getSaldo()<<endl;
+    cout << setw(30)<<" "<< endl;
+  }
+  return true;
+}
+bool Banco::modificarDados(const long int & CPF,const int & senha){
   int idConta(encontarConta(CPF));
-  if(not(idConta))
+  if(not(idConta) or not(login(CPF,senha)))
     return false;
-  cout<<"Dados antigos:"<<endl;
-  if(tipoDeConta ==1){
+  cout << "Dados antigos:" << endl;
+  if(tipoDeConta == 1){
     cout<<listaDeContasP[idConta-2];
     cin>>listaDeContasP[idConta-2];
     return true;
@@ -139,13 +159,13 @@ bool Banco::modificarDados(long int CPF, int senha){
     cout<<listaDeContasC[idConta-2];
     cin>>listaDeContasC[idConta-2];
     return true;
-  }else{
   }
   return false;
 }
- bool Banco::transferencia(long int CPF1,long int CPF2, float valor){
-     if(CPF1== CPF2 or not(encontarConta(CPF1) or encontarConta(CPF2)))
+ bool Banco::transferencia(const long int & CPF1,const long int& CPF2, const float & valor){
+     if(CPF1 == CPF2 or not(encontarConta(CPF2))) {
          return false;
+     }
     if(!sacar(valor, CPF1))
         return false;
     depositar(valor,CPF2);
@@ -205,23 +225,21 @@ bool Banco::modificarDados(long int CPF, int senha){
 
  }
 
-void Banco::cobrarManutencao(float taxa){
+void Banco::cobrarManutencao(const float & taxa){
   for(int i=0;i<listaDeContasC.size();i++){
     listaDeContasC[i].CalcularTaxaDeManutencao(taxa);
   }
 }
 
-void Banco::adicionarJuros(float Juros){
+void Banco::adicionarJuros(const float & Juros){
   for(int i=0;i<listaDeContasP.size();i++){
     listaDeContasP[i].setJurosExtra(Juros);
   }
 }
-
 void Banco::calcularJuros(){
   for(int i=0;i<listaDeContasP.size();i++){
     listaDeContasP[i].CalcularJurosExtra();
   }
 }
-
  Banco::~Banco(){
  }
