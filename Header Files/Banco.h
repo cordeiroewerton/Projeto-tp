@@ -14,7 +14,7 @@ class Banco/*:public ContaPoupanca,public ContaCorrente*/{
       ContaCorrente auxContaC;
       Administrador auxADM;
       bool verificarLogin(const long int &,const int&);
-      int  encontarConta(const long int &);//Ok
+      int  localizarIndeceDaContaNosVectos(const long int &);//Ok
       bool salvarDados();//OK
       bool carregarDados();
 public:
@@ -32,6 +32,7 @@ public:
       bool sacar(const float &,const long int &);
       bool depositar(const float &,const long int &);
       bool transferencia(const long int &,const long int&,const float&);
+      bool verComprovanteDeTransferencia(const long int &,const long int&,const float&);
 
       void cobrarManutencao(const float &);
       bool imprimir()const;

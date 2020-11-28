@@ -24,6 +24,7 @@ int main() {
     float valorSaque, valorDeposito, valor1 ;
     int senha , loopSistema;
     int op1  = 0, op2 = 0;
+    bool auxTransferencia;
     while (true) {
         int op(menu());
         switch (op) {
@@ -90,7 +91,16 @@ int main() {
                                 break;
                             }
                             cout << "Transferencia ";
-                            cout << (!p.transferencia(CPF1, CPF2, valorSaque) ? "nao ":"")<<"realizada" << endl;
+                            auxTransferencia = p.transferencia(CPF1, CPF2, valorSaque);
+                            cout << ((!auxTransferencia) ? "nao ":"")<<"realizada." << endl;
+                            if(auxTransferencia){
+                              cout<<"Ver comprovante?"<<endl;
+                              cout<<"[1] Sim"<<endl;
+                              cout<<"[2] Nao"<<endl;
+                              exceptInput(op);
+                              if(op == 1)
+                                p.verComprovanteDeTransferencia(CPF1,CPF2,valorSaque);
+                            }
                             break;
                         case 4:
                             cout << "Informe sua senha:";

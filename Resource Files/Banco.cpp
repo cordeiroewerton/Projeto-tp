@@ -49,7 +49,7 @@ bool Banco::carregarDados(){
   return true;
 }
 //Buscar pelo cadastro nos vectos
-int Banco::encontarConta(const long int & CPF){
+int Banco::localizarIndeceDaContaNosVectos(const long int & CPF){
   for(int i(0);i < listaDeContasP.size();i++)
     if(listaDeContasP[i].getUser().getCPF() == CPF) {
         tipoDeConta = 1;
@@ -71,7 +71,7 @@ bool Banco::login(const long int & CPF,const int & senha){
   return verificarLogin(CPF, senha);
 }
 bool Banco::verificarLogin(const long int & CPF,const int & senha){
-    int idConta = encontarConta(CPF);
+    int idConta = localizarIndeceDaContaNosVectos(CPF);
     if(idConta and tipoDeConta == 1)
         if(listaDeContasP[idConta-2].getSenha() == senha){
           return true;
@@ -89,19 +89,19 @@ bool Banco::verificarLogin(const long int & CPF,const int & senha){
 }
 
 bool Banco::signUp(ContaPoupanca contaAux){
-  if(encontarConta(contaAux.getUser().getCPF()))
+  if(localizarIndeceDaContaNosVectos(contaAux.getUser().getCPF()))
     return false;
   listaDeContasP.push_back(contaAux);
   return true;
 }
 bool Banco::signUp(ContaCorrente contaAux){
-  if(encontarConta(contaAux.getUser().getCPF()))
+  if(localizarIndeceDaContaNosVectos(contaAux.getUser().getCPF()))
     return false;
   listaDeContasC.push_back(contaAux);
   return true;
 }
 bool Banco::signUp(Administrador admAux){
-  if(encontarConta(admAux.getUser().getCPF()))
+  if(localizarIndeceDaContaNosVectos(admAux.getUser().getCPF()))
       return false;
   listaDeADM.push_back(admAux);
   return true;
@@ -113,7 +113,7 @@ bool Banco::signOut(){
 }
 
 bool Banco::deletarContas(const long int & CPF,const int & senha){
-  int idConta(encontarConta(CPF));
+  int idConta(localizarIndeceDaContaNosVectos(CPF));
   if(not(verificarLogin(CPF,senha)) and not(idConta))
     return false;
   if(tipoDeConta == 1){
@@ -147,7 +147,7 @@ bool Banco::imprimir()const{
   return true;
 }
 bool Banco::modificarDados(const long int & CPF,const int & senha){
-  int idConta(encontarConta(CPF));
+  int idConta(localizarIndeceDaContaNosVectos(CPF));
   if(not(idConta) or not(login(CPF,senha)))
     return false;
   cout << "Dados antigos:" << endl;
@@ -163,7 +163,7 @@ bool Banco::modificarDados(const long int & CPF,const int & senha){
   return false;
 }
  bool Banco::transferencia(const long int & CPF1,const long int& CPF2, const float & valor){
-     if(CPF1 == CPF2 or not(encontarConta(CPF2))) {
+     if(CPF1 == CPF2 or not(localizarIndeceDaContaNosVectos(CPF2))) {
          return false;
      }
     if(!sacar(valor, CPF1))
@@ -171,9 +171,28 @@ bool Banco::modificarDados(const long int & CPF,const int & senha){
     depositar(valor,CPF2);
     return true;
  }
-
+bool Banco::verComprovanteDeTransferencia(const long int & CPF1,const long int& CPF2, const float & valor){
+  int idConta1 = (localizarIndeceDaContaNosVectos(CPF1));
+  int idConta2;
+  if(tipoDeConta == 1){
+    idConta2 = (localizarIndeceDaContaNosVectos(CPF2));
+    if(tipoDeConta == 1){
+      cout<<listaDeContasP[idConta1-2].getUser().getNomeDoUsuario()<<" transferiu R$ "<<valor<<" para "<<listaDeContasP[idConta2-2].getUser().getNomeDoUsuario()<<endl;
+    }else{
+      cout<<listaDeContasP[idConta1-2].getUser().getNomeDoUsuario()<<" transferiu R$ "<<valor<<" para "<<listaDeContasC[idConta2-2].getUser().getNomeDoUsuario()<<endl;
+    }
+  }else{
+    idConta2 = (localizarIndeceDaContaNosVectos(CPF2));
+    if(tipoDeConta == 1){
+      cout<<listaDeContasC[idConta1-2].getUser().getNomeDoUsuario()<<" transferiu R$ "<<valor<<" para "<<listaDeContasP[idConta2-2].getUser().getNomeDoUsuario()<<endl;
+    }else{
+      cout<<listaDeContasC[idConta1-2].getUser().getNomeDoUsuario()<<" transferiu R$ "<<valor<<" para "<<listaDeContasC[idConta2-2].getUser().getNomeDoUsuario()<<endl;
+    }
+  }
+  return true;
+}
  bool Banco::sacar(const float & valorDoSaque,const long int & CPF){
-     int idConta(encontarConta(CPF));
+     int idConta(localizarIndeceDaContaNosVectos(CPF));
      if(not(idConta) or valorDoSaque < 0)
          return false;
      if(tipoDeConta == 1) {
@@ -190,7 +209,7 @@ bool Banco::modificarDados(const long int & CPF,const int & senha){
      return true;
  }
  bool Banco::depositar(const float & valorDoDeposito,const long int & CPF){
-     int idConta(encontarConta(CPF));
+     int idConta(localizarIndeceDaContaNosVectos(CPF));
      if(not(idConta))
          return false;
      if(tipoDeConta == 1) {
@@ -208,7 +227,7 @@ bool Banco::modificarDados(const long int & CPF,const int & senha){
  }
 
  void Banco::consultarDados(const long int & CPF, const int & senha){
-     int idConta=(encontarConta(CPF))-2;
+     int idConta=(localizarIndeceDaContaNosVectos(CPF))-2;
      if(tipoDeConta == 1) {
          cout << "Nome:" << listaDeContasP[idConta].getUser().getNomeDoUsuario() << endl;
          cout << "Idade: " << listaDeContasP[idConta].getUser().getIdade() << endl;
