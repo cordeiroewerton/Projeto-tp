@@ -134,17 +134,17 @@ bool Banco::imprimir()const{
   if(!listaDeContasP.size())
       cout << "Lista Vazia" << endl;
   for (int i(0); i < listaDeContasP.size(); i++){
-    cout << setw(30) << " "<< endl;
+    cout << setw(70) << " "<< endl;
     cout << "[" << i << "]" << "Nome: " << listaDeContasP[i].getUser().getNomeDoUsuario() << "| Idade:" << listaDeContasP[i].getUser().getIdade() << "| Saldo:" << listaDeContasP[i].getSaldo() << endl;
-    cout << setw(30) << " " << endl;
+    cout << setw(70) << " " << endl;
   }
   cout << "Lista de Contas Correntes" << endl;
   if(!listaDeContasP.size())
       cout << "Lista Vazia" << endl;
   for(int i(0); i < listaDeContasC.size(); i++){
-    cout << setw(30) << " " << endl;
+    cout << setw(70) << " " << endl;
     cout << "["<< i << "]" << "Nome: " << listaDeContasC[i].getUser().getNomeDoUsuario()<<"| Idade:"<<listaDeContasC[i].getUser().getIdade()<<"| Saldo:"<<listaDeContasC[i].getSaldo()<<endl;
-    cout << setw(30)<<" "<< endl;
+    cout << setw(70)<<" "<< endl;
   }
   return true;
 }
@@ -227,7 +227,20 @@ bool Banco::verComprovanteDeTransferencia(const long int & CPF1,const long int& 
      }
      return true;
  }
-
+ float Banco::getSaldoDoUsuarioLogado(const long int& CPF){
+   int idConta(localizarIndeceDaContaNosVectos(CPF));
+   if(tipoDeConta == 1)
+    return listaDeContasP[idConta-2].getSaldo();
+  return listaDeContasC[idConta-2].getSaldo();
+ }
+ string Banco::getNomeDoUsuarioLogado(const long int& CPF){
+   int idConta(localizarIndeceDaContaNosVectos(CPF));
+   if(tipoDeConta == 1)
+    return listaDeContasP[idConta-2].getUser().getNomeDoUsuario();
+  if(tipoDeConta == 2)
+    return listaDeContasC[idConta-2].getUser().getNomeDoUsuario();
+  return listaDeADM[idConta-2].getUser().getNomeDoUsuario();
+ }
  void Banco::consultarDados(const long int & CPF, const int & senha){
      int idConta=(localizarIndeceDaContaNosVectos(CPF))-2;
      cout.fill('_');

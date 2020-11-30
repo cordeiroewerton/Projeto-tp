@@ -21,7 +21,7 @@ int main() {
     Usuario userAux;
     string nome;
     long int CPF1, CPF2;
-    float valorSaque, valorDeposito, valor1 ;
+    float valorSaque, valorDeposito, valor1;
     int senha , loopSistema;
     int op1  = 0, op2 = 0;
     bool auxTransferencia;
@@ -53,24 +53,28 @@ int main() {
                 }
                 break;
             case 2:
-                system("cls");
                 cout << "Informe seu CPF:";
                 exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
                 exceptInput(senha,"sua senha");
                 loopSistema = p.login(CPF1, senha);
+                system("cls");
                 cout << (loopSistema == 1 ? " " : "senha invalida") << endl;
                 while (loopSistema == 1) {
+                    cout<<"Bem vindo(a) "<<p.getNomeDoUsuarioLogado(CPF1)<<endl;
                     op1 = subMenu();
                     switch (op1) {
                         case 1:
+                            cout<<"Saldo Atual: "<<p.getSaldoDoUsuarioLogado(CPF1)<<" [BRL]"<<endl;
+                            break;
+                        case 2:
                             cout << "Informe o valor do saque [BRL]:";
                             exceptInput(valorSaque,"o valor do saque  [BRL]");
                             cout << "Informe sua senha:";
                             exceptInput(senha,"sua senha");
                             cout << "Saque " << (p.sacar(valorSaque, CPF1) ? "realizado!" : "recusado!") << endl;
                             break;
-                        case 2:
+                        case 3:
                             cout << "Informe o valor do deposito    [BRL]:";
                             exceptInput(valorDeposito,"Valor do deposito  [BRL]");
                             cout << "Informe sua senha:";
@@ -78,7 +82,7 @@ int main() {
                             cout << "Deposito " << (p.depositar(valorDeposito, CPF1) ? "realizado!" : " recusado!")
                                  << endl;
                             break;
-                        case 3:
+                        case 4:
                             cout << "Informe o CPF do destinatario: ";
                             exceptInput(CPF2,"o CPF do destinatario ");
                             cout << "Informe o valor da transferencia [BRL]: ";
@@ -96,12 +100,13 @@ int main() {
                               cout<<"Ver comprovante?"<<endl;
                               cout<<"[1] Sim"<<endl;
                               cout<<"[2] Nao"<<endl;
-                              exceptInput(op,"a opcao");
+                              while(op > 2 or op < 1)
+                                exceptInput(op,"a opcao");
                               if(op == 1)
                                 p.verComprovanteDeTransferencia(CPF1,CPF2,valorSaque);
                             }
                             break;
-                        case 4:
+                        case 5:
                             cout << "Informe sua senha:";
                             exceptInput(senha,"sua senha");
                             if (p.login(CPF1, senha)) {
@@ -111,18 +116,21 @@ int main() {
                                 cout << "deletando" << endl;
                             }
                             break;
-                        case 5:
+                        case 6:
                             p.consultarDados(CPF1, senha);
                             break;
-                        case 6:
+                        case 7:
                             cout << "Informe sua senha:";
                             exceptInput(senha,"sua senha");
                             if (p.login(CPF1, senha))
                                 p.modificarDados(CPF1, senha);
                             break;
-                        default :
+                        case 8:
                             loopSistema = false;
                             p.signOut();
+                            break;
+                        default :
+                            cout << "Opcao nao encontrada!"<<endl;
                     }
                 }
                 break;
@@ -132,6 +140,8 @@ int main() {
                 exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
                 exceptInput(senha,"sua senha");
+                system("cls");
+
                 loopSistema = p.login(CPF1, senha);
                 cout << (loopSistema == 2 ? " " : "Senha invalida") << endl;
                 while (loopSistema) {
@@ -203,13 +213,14 @@ int subMenu(){
   int op;
   cout.fill('_');
   cout << setw(40) << " " << endl;
-  cout << "[1]Sacar" << endl;
-  cout << "[2]Deposita" << endl;
-  cout << "[3]Transferir" << endl;
-  cout << "[4]Deletar Conta" << endl;
-  cout << "[5]Consultar Dados" << endl;
-  cout << "[6]Modificar Dados" << endl;
-  cout << "[7]sair"<< endl;
+  cout << "[1]Saldo"<<endl;
+  cout << "[2]Sacar" << endl;
+  cout << "[3]Deposita" << endl;
+  cout << "[4]Transferir" << endl;
+  cout << "[5]Deletar Conta" << endl;
+  cout << "[6]Consultar Dados" << endl;
+  cout << "[7]Modificar Dados" << endl;
+  cout << "[8]sair"<< endl;
   cout << setw(40) << " " << endl;
   cout<<">>";
   exceptInput(op,"a opcao");
@@ -218,7 +229,6 @@ int subMenu(){
 }
 int subMenuADM(){
     int op;
-    system("cls");
     cout.fill('_');
     cout << setw(40)<<" " << endl;
     cout << "[1]Cadastrar novo administrador" << endl;

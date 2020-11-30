@@ -33,7 +33,8 @@ class Banco{
       bool depositar(const float &,const long int &);
       bool transferencia(const long int &,const long int&,const float&);
       bool verComprovanteDeTransferencia(const long int &,const long int&,const float&);
-
+      float getSaldoDoUsuarioLogado(const long int&);
+      string getNomeDoUsuarioLogado(const long int&);
       void cobrarManutencao(const float &);
       bool imprimir()const;
       void adicionarJuros(const float &);
