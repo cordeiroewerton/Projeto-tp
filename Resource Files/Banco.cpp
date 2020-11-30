@@ -1,5 +1,4 @@
 #include "..\Header Files\Banco.h"
-#include <algorithm>
 Banco::Banco(){
   carregarDados();
 }
@@ -7,21 +6,21 @@ bool  Banco::salvarDados(){
     fstream arq1("../DadosContaPoupanca.bin",ios::out);
     fstream arq2("../DadosContaCorrente.bin",ios::out);
     fstream arq3("../DadosADM.bin",ios::out);
-    if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
-      return false;
-    }
-    for(int i (0); i < listaDeContasP.size(); i++){
-      auxContaP = listaDeContasP[i];
-      arq1.write(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP));
-    }
-    for(int i (0); i < listaDeContasC.size(); i++){
-      auxContaC = listaDeContasC[i];
-      arq2.write(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC));
-    }
-    for(int i (0); i < listaDeADM.size(); i++){
-      auxADM = listaDeADM[i];
-      arq3.write(reinterpret_cast<char *>(&auxADM),sizeof(auxADM));
-    }
+    if(arq1.is_open())
+      for(int i (0); i < listaDeContasP.size(); i++){
+        auxContaP = listaDeContasP[i];
+        arq1.write(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP));
+      }
+    if(arq2.is_open())
+      for(int i (0); i < listaDeContasC.size(); i++){
+        auxContaC = listaDeContasC[i];
+        arq2.write(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC));
+      }
+    if(arq3.is_open())
+      for(int i (0); i < listaDeADM.size(); i++){
+        auxADM = listaDeADM[i];
+        arq3.write(reinterpret_cast<char *>(&auxADM),sizeof(auxADM));
+      }
     arq1.close();
     arq2.close();
     arq3.close();
@@ -31,18 +30,18 @@ bool Banco::carregarDados(){
   fstream arq1("../DadosContaPoupanca.bin",ios::in);
   fstream arq2("../DadosContaCorrente.bin",ios::in);
   fstream arq3("../DadosADM.bin",ios::in);
-  if(!arq1.is_open() or !arq2.is_open() or !arq3.is_open()){
-    return false;
-  }
-  while(arq1.read(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP))){
-    listaDeContasP.push_back(auxContaP);
-  }
-  while(arq2.read(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC))){
-    listaDeContasC.push_back(auxContaC);
-  }
-  while(arq3.read(reinterpret_cast<char *>(&auxADM),sizeof(auxADM))){
-    listaDeADM.push_back(auxADM);
-  }
+  if(arq1.is_open())
+    while(arq1.read(reinterpret_cast<char *>(&auxContaP),sizeof(auxContaP))){
+      listaDeContasP.push_back(auxContaP);
+    }
+  if(arq2.is_open())
+    while(arq2.read(reinterpret_cast<char *>(&auxContaC),sizeof(auxContaC))){
+      listaDeContasC.push_back(auxContaC);
+    }
+  if(arq3.is_open())
+    while(arq3.read(reinterpret_cast<char *>(&auxADM),sizeof(auxADM))){
+      listaDeADM.push_back(auxADM);
+    }
   arq1.close();
   arq2.close();
   arq3.close();
@@ -67,8 +66,11 @@ int Banco::localizarIndeceDaContaNosVectos(const long int & CPF){
       }
   return 0;
 }
-bool Banco::login(const long int & CPF,const int & senha){
-  return verificarLogin(CPF, senha);
+int Banco::login(const long int & CPF,const int & senha){
+  int vLogin(verificarLogin(CPF, senha));
+  if(!(tipoDeConta == 3))
+    return vLogin;
+  return vLogin?vLogin+1:vLogin;
 }
 bool Banco::verificarLogin(const long int & CPF,const int & senha){
     int idConta = localizarIndeceDaContaNosVectos(CPF);

@@ -5,17 +5,16 @@ void exceptInput(T & auxT, string auxTemp){
     while(loop){
         try {
             cin >> auxT;
-            if (cin.fail()) {
+            if (cin.fail())//retorna true se  ocorrer uma falha de entrada
                 throw "Caracter invalido, informe novamente ";
-            } else {
-                loop = false;
-            }
+            loop = false;
         }catch(const char * e){
-            cout<<e<<auxTemp+": ";
-            cin.clear();
-            cin.ignore(256,'\n');
+            cout<<e<<auxTemp + ": ";
+            cin.clear();//limpar o status de erro do buffer
+            cin.ignore(256,'\n');//ignora o resto da linha após a primeira instância do erro pula/passa para a próxima linha.
         }
     }
+    //...
 }
 ostream & operator<<(ostream & os,Usuario & auxUsuario){
 	cout<<"Nome: "<<auxUsuario.getNomeDoUsuario();

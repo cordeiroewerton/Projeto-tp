@@ -3,7 +3,7 @@
 #include "..\Header Files\Administrador.h"
 #ifndef _BANCO_H
 #define _BANCO_H
-class Banco/*:public ContaPoupanca,public ContaCorrente*/{
+class Banco{
     private:
 
       int tipoDeConta;
@@ -17,9 +17,9 @@ class Banco/*:public ContaPoupanca,public ContaCorrente*/{
       int  localizarIndeceDaContaNosVectos(const long int &);//Ok
       bool salvarDados();//OK
       bool carregarDados();
-public:
+  public:
       Banco();
-      bool login(const long int &,const int &);//OK
+      int login(const long int &,const int &);//OK
       bool signUp(ContaCorrente);//OK
       bool signUp(ContaPoupanca);//OK
       bool signUp(Administrador);//ok

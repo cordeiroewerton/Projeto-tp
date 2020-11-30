@@ -33,7 +33,6 @@ int main() {
                 cout << setw(40) << " " << endl;
                 cout << "[1] Conta Poupanca" << endl;
                 cout << "[2] Conta Corrente" << endl;
-                cout << "[3] Cadastrar administrador" << endl;
                 cout << setw(40) << " " << endl;
                 cout<<">>";
                 exceptInput(op2,"a opcao");
@@ -49,25 +48,19 @@ int main() {
                         cin >> contaAuxC;
                         cout << (p.signUp(contaAuxC) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
                         break;
-                    case 3:
-                        cout << "Insira os dados do Administrador" << endl;
-                        cin >> userAux;
-                        cout << "Informe sua senha:";
-                        exceptInput(senha,"sua senha");
-                        adm.setUser(userAux);
-                        adm.setSenha(senha);
-                        cout << (p.signUp(adm) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
-                        break;
+                    default:
+                        cout << "Opcao nao encontrada";
                 }
                 break;
             case 2:
+                system("cls");
                 cout << "Informe seu CPF:";
                 exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
                 exceptInput(senha,"sua senha");
                 loopSistema = p.login(CPF1, senha);
-                cout << (loopSistema ? " " : "senha invalida") << endl;
-                while (loopSistema) {
+                cout << (loopSistema == 1 ? " " : "senha invalida") << endl;
+                while (loopSistema == 1) {
                     op1 = subMenu();
                     switch (op1) {
                         case 1:
@@ -134,41 +127,50 @@ int main() {
                 }
                 break;
             case 3:
+                system("cls");
                 cout << "Informe seu CPF:";
                 exceptInput(CPF1,"seu CPF");
                 cout << "Informe sua senha:";
                 exceptInput(senha,"sua senha");
                 loopSistema = p.login(CPF1, senha);
-                cout << (loopSistema ? " " : "Senha invalida") << endl;
+                cout << (loopSistema == 2 ? " " : "Senha invalida") << endl;
                 while (loopSistema) {
                     op1 = subMenuADM();
                     switch (op1) {
                         case 1:
+                            cout << "Insira os dados do Administrador" << endl;
+                            cin >> userAux;
+                            cout << "Informe sua senha:";
+                            exceptInput(senha,"sua senha");
+                            adm.setUser(userAux);
+                            adm.setSenha(senha);
+                            cout << (p.signUp(adm) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
+                        case 2:
                             cout << "Digite o valor a ser cobrado:";
                             exceptInput(valor1,"o valor a ser cobrado");
                             p.cobrarManutencao(valor1);
                             cout << "Cobranca realizada" << endl;
                             break;
-                        case 2:
+                        case 3:
                             p.calcularJuros();
                             cout << "Juros Calculado" << endl;
                             break;
-                        case 3:
+                        case 4:
                             cout << "Digite o valor, em porcentagem, do juros:";
                             exceptInput(valor1,"o valor, em porcentagem, do juros");
                             p.adicionarJuros(valor1);
                             cout << "Valor alterado" << endl;
                             break;
-                        case 4:
+                        case 5:
                             p.imprimir();
                             cout << "Fim" << endl;
                             break;
-                        case 5:
+                        case 6:
                             loopSistema = false;
                             p.signOut();
                             break;
                         default:
-                            cout << "Opcao nao encontrada";
+                            cout << "Opcao nao encontrada!"<<endl;
                         }
                 }
             break;
@@ -176,6 +178,8 @@ int main() {
                 cout << "Saindo..." << endl;
                 p.signOut();
                 return 0;
+          default:
+                cout << "Opcao nao encontrada!"<<endl;;
         }
     }
 }
@@ -214,13 +218,15 @@ int subMenu(){
 }
 int subMenuADM(){
     int op;
+    system("cls");
     cout.fill('_');
     cout << setw(40)<<" " << endl;
-    cout << "[1]Fazer cobranca de manutencao das contas correntes" << endl;
-    cout << "[2]Adicionar juros nas contas poupancas" << endl;
-    cout << "[3]Alterar a porcentagem de juros" << endl;
-    cout << "[4]Imprimir Lista de Contas" << endl;
-    cout << "[5]Sair" << endl;
+    cout << "[1]Cadastrar novo administrador" << endl;
+    cout << "[2]Fazer cobranca de manutencao das contas correntes" << endl;
+    cout << "[3]Adicionar juros nas contas poupancas" << endl;
+    cout << "[4]Alterar a porcentagem de juros" << endl;
+    cout << "[5]Imprimir Lista de Contas" << endl;
+    cout << "[6]Sair" << endl;
     cout << setw(40) << " " << endl;
     cout<<">>";
     exceptInput(op,"a opcao");
