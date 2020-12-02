@@ -11,6 +11,8 @@ public:
     int getSenha()const;
     void setUser(const Usuario & userM);
     Usuario getUser()const;
+    friend istream &operator>>(istream &, Administrador &);
+    friend ostream &operator<<(ostream &, Administrador &);
     ~Administrador();
 };
 #endif

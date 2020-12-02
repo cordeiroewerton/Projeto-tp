@@ -1,4 +1,6 @@
-#include "..\Header Files\Conta.h"
+#include "..\Header Files\ContaPoupanca.h"
+#include "..\Header Files\ContaCorrente.h"
+#include "..\Header Files\Administrador.h"
 template<typename  T>
 void exceptInput(T & auxT, string auxTemp){
     bool loop = true;
@@ -32,8 +34,6 @@ istream & operator>>(istream & is,Usuario & auxUsuario){
 	cout<<"Nome: ";getline(cin,nome);
 	cout<<"Idade: ";
 	exceptInput(idade,"sua idade");
-	cout<<"CPF: ";
-  exceptInput(CPF, "seu CPF");
   cin.ignore();
   cout<<"Rua: ";getline(cin,endereco.rua);
   cout<<"Cep: ";getline(cin,endereco.CEP);
@@ -52,12 +52,47 @@ ostream & operator<<(ostream & os,Conta & auxUsuario){
 	return os;
 }
 
-istream & operator>>(istream & in, Conta & contaAux){
+istream & operator>>(istream & in, ContaPoupanca & contaAux){
     int senha;
+    long int CPF;
     Usuario auxUser;
     cin>>auxUser;
+    cout<<"CPF: ";
+    exceptInput(CPF, "seu CPF");
     cout<<"senha: ";
     exceptInput(senha,"sua senha");
+    auxUser.setCPF(CPF);
+    contaAux.setSenha(senha);
+    contaAux.setUser(auxUser);
+    system("cls");
+    return in;
+}
+
+istream & operator>>(istream & in, ContaCorrente & contaAux){
+    int senha;
+    long int CPF;
+    Usuario auxUser;
+    cin>>auxUser;
+    cout<<"CPF: ";
+    exceptInput(CPF, "seu CPF");
+    cout<<"senha: ";
+    exceptInput(senha,"sua senha");
+    auxUser.setCPF(CPF);
+    contaAux.setSenha(senha);
+    contaAux.setUser(auxUser);
+    system("cls");
+    return in;
+}
+istream & operator>>(istream & in, Administrador & contaAux){
+    int senha;
+    long int CPF;
+    Usuario auxUser;
+    cin>>auxUser;
+    cout<<"CPF: ";
+    exceptInput(CPF, "seu CPF");
+    cout<<"senha: ";
+    exceptInput(senha,"sua senha");
+    auxUser.setCPF(CPF);
     contaAux.setSenha(senha);
     contaAux.setUser(auxUser);
     system("cls");

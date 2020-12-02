@@ -10,6 +10,7 @@ class ContaCorrente:public Conta{
       ContaCorrente(const Usuario & = {"0",0,0,{"0","0","0","0"}},const float &  = 0,const float & = 0);
       void setTaxaDeManutencao(const float &); //desconto para a manutenção da conta corrente (geralmente 15 reais por mes)
       void CalcularTaxaDeManutencao(const float &);
+
 };
 
 #endif

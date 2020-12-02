@@ -20,11 +20,13 @@ int main() {
     Administrador adm;
     Usuario userAux;
     string nome;
+    cin>>adm;p.signUp(adm);
     long int CPF1, CPF2;
     float valorSaque, valorDeposito, valor1;
     int senha , loopSistema;
     int op1  = 0, op2 = 0;
     bool auxTransferencia;
+
     while (true) {
         int op(menu());
         switch (op) {
@@ -100,6 +102,7 @@ int main() {
                               cout<<"Ver comprovante?"<<endl;
                               cout<<"[1] Sim"<<endl;
                               cout<<"[2] Nao"<<endl;
+                              exceptInput(op,"a opcao");
                               while(op > 2 or op < 1)
                                 exceptInput(op,"a opcao");
                               if(op == 1)
@@ -124,6 +127,9 @@ int main() {
                             exceptInput(senha,"sua senha");
                             if (p.login(CPF1, senha))
                                 p.modificarDados(CPF1, senha);
+                                cout<<"Dados modificados"<<endl;
+                                cout<<"Saindo do sistema para efetuar as alteracoes"<<endl;
+                                loopSistema = false;
                             break;
                         case 8:
                             loopSistema = false;
@@ -141,7 +147,6 @@ int main() {
                 cout << "Informe sua senha:";
                 exceptInput(senha,"sua senha");
                 system("cls");
-
                 loopSistema = p.login(CPF1, senha);
                 cout << (loopSistema == 2 ? " " : "Senha invalida") << endl;
                 while (loopSistema) {
@@ -149,27 +154,24 @@ int main() {
                     switch (op1) {
                         case 1:
                             cout << "Insira os dados do Administrador" << endl;
-                            cin >> userAux;
-                            cout << "Informe sua senha:";
-                            exceptInput(senha,"sua senha");
-                            adm.setUser(userAux);
-                            adm.setSenha(senha);
+                            cin >> adm;
                             cout << (p.signUp(adm) ? "sucesso" : "falha, CPF ja cadastrado!") << endl;
+                            break;
                         case 2:
                             cout << "Digite o valor a ser cobrado:";
                             exceptInput(valor1,"o valor a ser cobrado");
                             p.cobrarManutencao(valor1);
                             cout << "Cobranca realizada" << endl;
                             break;
-                        case 3:
-                            p.calcularJuros();
-                            cout << "Juros Calculado" << endl;
-                            break;
-                        case 4:
+                       case 3:
                             cout << "Digite o valor, em porcentagem, do juros:";
                             exceptInput(valor1,"o valor, em porcentagem, do juros");
                             p.adicionarJuros(valor1);
                             cout << "Valor alterado" << endl;
+                            break;
+                        case 4:
+                            p.calcularJuros();
+                            cout << "Juros Calculado" << endl;
                             break;
                         case 5:
                             p.imprimir();
@@ -233,8 +235,8 @@ int subMenuADM(){
     cout << setw(40)<<" " << endl;
     cout << "[1]Cadastrar novo administrador" << endl;
     cout << "[2]Fazer cobranca de manutencao das contas correntes" << endl;
-    cout << "[3]Adicionar juros nas contas poupancas" << endl;
-    cout << "[4]Alterar a porcentagem de juros" << endl;
+    cout << "[3]Alterar a porcentagem de juros" << endl;
+    cout << "[4]Adicionar juros nas contas poupancas" << endl;
     cout << "[5]Imprimir Lista de Contas" << endl;
     cout << "[6]Sair" << endl;
     cout << setw(40) << " " << endl;
