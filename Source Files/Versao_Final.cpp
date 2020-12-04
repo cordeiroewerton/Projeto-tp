@@ -20,7 +20,6 @@ int main() {
     Administrador adm;
     Usuario userAux;
     string nome;
-    cin>>adm;p.signUp(adm);
     long int CPF1, CPF2;
     float valorSaque, valorDeposito, valor1;
     int senha , loopSistema;
